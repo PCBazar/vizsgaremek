@@ -1,0 +1,13 @@
+.Container {
+    padding: 20px;
+    width: 100%;
+  }
+.row{
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  align-items: center;
+  align-content: stretch;
+  gap: 20px;
+}
