@@ -3,7 +3,7 @@ py -m venv .<br>
 Scripts\activate<br>
 pip install -r requirements.txt<br>
 cd backend<br>
-# Először telepítsük a frontend részt, majd indítsuk el a szervert a következő paranccsal: <br>
+Először telepítsük a frontend részt, majd indítsuk el a szervert a következő paranccsal: <br>
 py manage.py runserver<br>   
 
 Telepítés:<br>
