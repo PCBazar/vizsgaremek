@@ -12,3 +12,20 @@ nav a {
     font-size: 18px;
     padding: 0 15px;
   }
+
+button {
+    padding: 10px 20px; 
+    background-color: aqua; 
+    color: white; 
+    border: none; 
+    border-radius: 5px; 
+    font-size: 16px; 
+    cursor: pointer; 
+    transition: background-color 0.3s; 
+    text-decoration: none;
+    margin-top: 10px;
+}
+
+button:hover {
+  background-color: #00B2B2; 
+}

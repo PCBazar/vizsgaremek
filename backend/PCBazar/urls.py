@@ -9,5 +9,6 @@ urlpatterns = [
     path('api/registration/', views.Registration,name="Registration"),
     path('api/logout/', views.Logout_user,name="Logout_user"),
     path('api/status/', views.Login_status,name="Logout_user"),
+    path('api/Add/', views.Add,name="Add"),
     re_path(r'^.*$', TemplateView.as_view(template_name='index.html')),
 ]

@@ -6,17 +6,23 @@ import Login from "../Login/Login";
 import Logout from "../Logout/Logout";
 import Registration from '../Registration/Registration';
 import Product from "../Product/Product";
+import Add from "../Add/Add";
 
 function App() {
   const [items, setItems] = useState([]);
+  const [categories, setCategories] = useState([]);
   const isLoggedIn = localStorage.getItem('authTokens') !== null;
 
   useEffect(() => {
     fetch('http://127.0.0.1:8000/api/GetAll/')
       .then(response => response.json())
-      .then(data => setItems(data.products))
+      .then(data => {
+        setItems(data.products);
+        setCategories(data.category); // Kategóriák mentése
+      })
       .catch(error => console.error('Error fetching data:', error));
   }, []);
+  
 
   return (
     <div className="App">
@@ -26,11 +32,13 @@ function App() {
           {!isLoggedIn && <Link to="/login">Bejelentkezés</Link>}
           {isLoggedIn && <Logout />}
         </nav>
+        <Link to="/add"><button>Hirdetésfeladás</button></Link>
         <Routes>
           <Route path="/" element={<Lista />} />
           <Route path="/login" element={<Login />} />
           <Route path="/registration" element={<Registration />} />
           <Route path="/product/:id" element={<Product items={items} />} />
+          <Route path="/add" element={<Add categories={categories} />} />
         </Routes>
       </Router>
     </div>

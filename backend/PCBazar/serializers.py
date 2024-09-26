@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Product,Review,Transaction
+from .models import Product,Review,Transaction,Category
 from django.contrib.auth.models import User
 
 class SellerSerializer(serializers.ModelSerializer):
@@ -30,3 +30,9 @@ class TransactionSerializer(serializers.ModelSerializer):
         model = Transaction
         fields = "__all__"
         depth = 1 
+        
+class CategorySerializer(serializers.ModelSerializer):  
+
+    class Meta:
+        model = Category
+        fields = "__all__"
