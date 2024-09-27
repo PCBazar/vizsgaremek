@@ -1,26 +1,50 @@
 import React, { useState, useEffect } from 'react';
 import Card from '../Card/Card';
-import "./list.css";
+import Search from '../Search/Search';
+import './list.css';
+import Filter from '../Filter/Filter';
 
 const Lista = () => {
-    const [pc, setPc] = useState([]);
+    const [products, setProducts] = useState([]);
+    const [searchTerm, setSearchTerm] = useState('');
+    const [categories, setCategories] = useState([]);
+    const [selectedCategory, setSelectedCategory] = useState('');
 
     useEffect(() => {
         fetch('http://127.0.0.1:8000/api/GetAll/')
             .then(response => response.json())
-            .then(data => setPc(data.products))
+            .then(data => {
+                setProducts(data.products);
+                setCategories(data.category);
+            })
+            .catch(error => console.error('Error fetching data:', error));
     }, []);
 
+    const handleSearch = (term) => {
+        setSearchTerm(term);
+    };
+
+    // Szűrd a termékeket a keresési feltétel és a kiválasztott kategória alapján
+    const filteredProducts = products.filter(item => {
+        const matchesSearch = item.title.toLowerCase().includes(searchTerm.toLowerCase());
+        const matchesCategory = selectedCategory ? item.category.id === parseInt(selectedCategory) : true;
+        return matchesSearch && matchesCategory;
+    });
+
+
+
     return (
-            <div className="Container">
-                <div className="row">
-                    {pc.map(item => (
-                        <div className="col-md-4" key={item.id}>
-                            <Card item={item} />
-                        </div>
-                    ))}
-                </div>
+        <div className="Container">
+            <Search onSearch={handleSearch} />
+            <Filter categories={categories} setSelectedCategory={setSelectedCategory} />
+            <div className="row">
+                {filteredProducts.map(item => (
+                    <div className="col-md-4" key={item.id}>
+                        <Card item={item} />
+                    </div>
+                ))}
             </div>
+        </div>
     );
 };
 

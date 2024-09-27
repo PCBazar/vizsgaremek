@@ -1,0 +1,19 @@
+.search-component {
+    display: flex;
+    justify-content: center; /* Középre helyezi a keresőmezőt */
+    margin: 20px 0; /* Függőleges margó a keresőmező körül */
+}
+
+.search-component input {
+    width: 300px; /* Keresőmező szélessége */
+    padding: 10px; /* Belső párnázás */
+    border: 1px solid #ccc; /* Szegély */
+    border-radius: 5px; /* Lekerekített sarkok */
+    font-size: 16px; /* Betűméret */
+}
+
+.search-component input:focus {
+    border-color: #007bff; /* Szegély színe fókuszáláskor */
+    outline: none; /* Kihagyja a fókusz keretet */
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5); /* Fénylő árnyék fókuszáláskor */
+}

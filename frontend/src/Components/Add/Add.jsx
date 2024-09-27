@@ -35,13 +35,14 @@ const Add = ({ categories }) => {
 
         if (response.ok) {
             alert('Hirdetés sikeresen feladva!');
-            navigate('/');
+            navigate('/')
             // Ha a válaszban új CSRF token van, frissítsd a cookie-t
             if (data.csrfToken) {
                 document.cookie = `csrftoken=${data.csrfToken}; path=/`; // CSRF token frissítése
             }
         } else {
-            alert(`Hiba történt a hirdetés feladása során: Nem vagy bejelentkezve`);
+            alert(`Be kell jelentkezned a hirdetésfeladáshoz!`);
+            navigate('/login')
             // Ha a válaszban új CSRF token van, frissítsd a cookie-t
             if (data.csrfToken) {
                 document.cookie = `csrftoken=${data.csrfToken}; path=/`; // CSRF token frissítése
@@ -108,7 +109,6 @@ const Add = ({ categories }) => {
                     onChange={(e) => setCategory(e.target.value)}
                     required
                 >
-                    <option value="">Válassz kategóriát</option>
                     {categories.map((category) => (
                         <option key={category.id} value={category.id}>
                             {category.name}

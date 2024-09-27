@@ -7,6 +7,7 @@ import Logout from "../Logout/Logout";
 import Registration from '../Registration/Registration';
 import Product from "../Product/Product";
 import Add from "../Add/Add";
+import Search from "../Search/Search";
 
 function App() {
   const [items, setItems] = useState([]);
@@ -18,11 +19,10 @@ function App() {
       .then(response => response.json())
       .then(data => {
         setItems(data.products);
-        setCategories(data.category); // Kategóriák mentése
+        setCategories(data.category);
       })
       .catch(error => console.error('Error fetching data:', error));
   }, []);
-  
 
   return (
     <div className="App">
@@ -31,8 +31,8 @@ function App() {
           <Link to="/">Főoldal</Link>
           {!isLoggedIn && <Link to="/login">Bejelentkezés</Link>}
           {isLoggedIn && <Logout />}
+          <Link to="/add">Hirdetésfeladás</Link>
         </nav>
-        <Link to="/add"><button>Hirdetésfeladás</button></Link>
         <Routes>
           <Route path="/" element={<Lista />} />
           <Route path="/login" element={<Login />} />
