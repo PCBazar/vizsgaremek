@@ -8,7 +8,7 @@ pip install -r requirements.txt
 
 cd backend  
 
-Először telepítsük a frontend részt, majd indítsuk el a szervert a következő paranccsal:  
+*Először telepítsük a frontend részt, majd indítsuk el a szervert a következő paranccsal:  
 
 py manage.py runserver  
 
