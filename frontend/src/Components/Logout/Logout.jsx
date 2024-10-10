@@ -10,13 +10,13 @@ const Logout = () => {
         try {
 
 
-            // Majd használjuk a megszerzett CSRF tokent a kijelentkezéshez
+
             const response = await fetch('http://127.0.0.1:8000/api/logout/', {
-                method: 'POST', // POST kérés
-                credentials: 'include', // A session cookie-k küldése
+                method: 'POST', 
+                credentials: 'include', 
                 headers: {
                     'Content-Type': 'application/json',
-                    'X-CSRFToken': document.cookie.match(/csrftoken=([^;]+)/)[1], // CSRF token beállítása
+                    'X-CSRFToken': document.cookie.match(/csrftoken=([^;]+)/)[1], 
                 },
             });
 
@@ -25,10 +25,9 @@ const Logout = () => {
                 console.log('Logout response:', data);
                 alert(data.message);
 
-                // Token eltávolítása
+         
                 localStorage.removeItem("authTokens");
 
-                // Átirányítás a főoldalra
                 navigate('/');
                 window.location.reload();
             } else {

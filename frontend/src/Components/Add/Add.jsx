@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import "./add.css";
 import { useNavigate } from 'react-router-dom';
 
@@ -7,9 +7,15 @@ const Add = ({ categories }) => {
     const [title, setTitle] = useState('');
     const [description, setDescription] = useState('');
     const [price, setPrice] = useState('');
-    const [stockQuantity, setStockQuantity] = useState(''); // Mennyiség állapot
+    const [stockQuantity, setStockQuantity] = useState('');
     const [image, setImage] = useState(null);
     const [category, setCategory] = useState('');
+
+    useEffect(() => {
+        if (categories.length > 0 && !category) {
+            setCategory(categories[0].id);
+        }
+    }, [categories]);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -18,9 +24,12 @@ const Add = ({ categories }) => {
         formData.append('title', title);
         formData.append('description', description);
         formData.append('price', price);
-        formData.append('stock_quantity', stockQuantity); // Mennyiség hozzáadása
-        formData.append('image', image);
-        formData.append('category', category); // Kategória hozzáadása
+        formData.append('stock_quantity', stockQuantity);
+        if (image) {
+            formData.append('image', image);
+        }
+        formData.append('category', category);
+
 
         const response = await fetch('http://127.0.0.1:8000/api/Add/', {
             method: 'POST',
@@ -31,24 +40,15 @@ const Add = ({ categories }) => {
             body: formData,
         });
 
-        const data = await response.json(); // JSON válasz beolvasása
-
         if (response.ok) {
             alert('Hirdetés sikeresen feladva!');
-            navigate('/')
-            // Ha a válaszban új CSRF token van, frissítsd a cookie-t
-            if (data.csrfToken) {
-                document.cookie = `csrftoken=${data.csrfToken}; path=/`; // CSRF token frissítése
-            }
+            navigate('/');
         } else {
-            alert(`Be kell jelentkezned a hirdetésfeladáshoz!`);
-            navigate('/login')
-            // Ha a válaszban új CSRF token van, frissítsd a cookie-t
-            if (data.csrfToken) {
-                document.cookie = `csrftoken=${data.csrfToken}; path=/`; // CSRF token frissítése
-            }
+            alert('Hiba történt a hirdetés feladása közben.');
         }
+
     };
+
 
     return (
         <div className='add-container'>
@@ -100,7 +100,6 @@ const Add = ({ categories }) => {
                     id="image"
                     type="file"
                     onChange={(e) => setImage(e.target.files[0])}
-                    required
                 />
                 <label htmlFor="category">Kategória:</label>
                 <select

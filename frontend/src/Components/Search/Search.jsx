@@ -7,7 +7,7 @@ const Search = ({ onSearch }) => {
   const handleSearchTermChange = (e) => {
     const term = e.target.value;
     setSearchTerm(term);
-    onSearch(term); // Hívja meg a keresési függvényt a propként kapott handleSearch-el
+    onSearch(term); 
   };
 
   return (

@@ -80,7 +80,7 @@ def Logout_user(request):
     
     
 @api_view(['POST'])
-@permission_classes([IsAuthenticated])  # Csak hitelesített felhasználók adhatnak fel terméket
+@permission_classes([IsAuthenticated]) 
 def Add(request):
     csrf_token = get_token(request)
     # Kérési adatok beolvasása
@@ -90,38 +90,29 @@ def Add(request):
     stock_quantity = request.data.get('stock_quantity')
     category_id = request.data.get('category')
     
-    # Ellenőrizni, hogy az összes szükséges adat megvan-e
     if not all([title, description, price, stock_quantity, category_id]):
         return Response({'error': 'Hiányzó mezők! Kérjük, töltsön ki minden mezőt.'}, status=status.HTTP_400_BAD_REQUEST)
     
-    # Kategória beolvasása ID alapján
     try:
         category = models.Category.objects.get(id=category_id)
     except models.Category.DoesNotExist:
         return Response({'error': 'A megadott kategória nem létezik.'}, status=status.HTTP_400_BAD_REQUEST)
 
-    # Termék létrehozása
     product = models.Product(
         title=title,
         description=description,
         price=price,
         stock_quantity=stock_quantity,
         category=category,
-        seller=request.user  # A bejelentkezett felhasználót használjuk eladóként
+        seller=request.user 
     )
-    
-    # Kép hozzáadása, ha van
     if 'image' in request.FILES:
         product.image = request.FILES['image']
-    
-    # Termék mentése az adatbázisba
+        
     product.save()
-
-    # Serializer a visszaküldéshez
     serializer = serializers.ProductSerializer(product)
     
     return Response({'product': serializer.data, 'csrfToken': csrf_token}, status=status.HTTP_201_CREATED)
-
 
 @api_view(['GET'])
 def Login_status(request):

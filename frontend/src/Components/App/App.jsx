@@ -7,7 +7,6 @@ import Logout from "../Logout/Logout";
 import Registration from '../Registration/Registration';
 import Product from "../Product/Product";
 import Add from "../Add/Add";
-import Search from "../Search/Search";
 
 function App() {
   const [items, setItems] = useState([]);

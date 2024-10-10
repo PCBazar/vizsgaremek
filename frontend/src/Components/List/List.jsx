@@ -24,7 +24,6 @@ const Lista = () => {
         setSearchTerm(term);
     };
 
-    // Szűrd a termékeket a keresési feltétel és a kiválasztott kategória alapján
     const filteredProducts = products.filter(item => {
         const matchesSearch = item.title.toLowerCase().includes(searchTerm.toLowerCase());
         const matchesCategory = selectedCategory ? item.category.id === parseInt(selectedCategory) : true;
