@@ -30,6 +30,7 @@ class Transaction(models.Model):
     price = models.PositiveIntegerField(default=0)
     transaction_date = models.DateTimeField(auto_now_add=True)
     payment_method = models.CharField(max_length=50)
+    stock_quantity = models.PositiveIntegerField(default=0)
     def __str__(self):
         return str(self.id) + " - " +  (self.buyer.username) + " - " + (self.product.title)
     

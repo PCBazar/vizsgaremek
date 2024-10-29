@@ -114,6 +114,47 @@ def Add(request):
     
     return Response({'product': serializer.data, 'csrfToken': csrf_token}, status=status.HTTP_201_CREATED)
 
+
+@api_view(['POST'])
+@permission_classes([IsAuthenticated]) 
+def Cart(request):
+    csrf_token = get_token(request)
+
+    # Kérési adatok beolvasása
+    product_id = request.data.get('product_id')
+    quantity = request.data.get('quantity')
+    payment_method = request.data.get('payment_method')
+
+ 
+    if not all([product_id, quantity, payment_method]):
+        return Response({'error': 'Hiányzó mezők! Kérjük, töltsön ki minden mezőt.'}, status=status.HTTP_400_BAD_REQUEST)
+
+    try:
+        product = models.Product.objects.get(id=product_id)
+
+       
+        if quantity > product.stock_quantity:
+            return Response({'error': 'Nincs elegendő készlet.'}, status=status.HTTP_400_BAD_REQUEST)
+
+
+        transaction = models.Transaction.objects.create(
+            buyer=request.user,  
+            product=product,
+            price=product.price * quantity, 
+            payment_method=payment_method,
+            stock_quantity=quantity
+        )
+
+   
+        product.stock_quantity -= quantity
+        product.save()
+
+        return Response({'message': 'Tranzakció sikeresen létrehozva.', 'transaction_id': transaction.id, 'csrfToken': csrf_token}, status=status.HTTP_201_CREATED)
+
+    except models.Product.DoesNotExist:
+        return Response({'error': 'A megadott termék nem létezik.'}, status=status.HTTP_404_NOT_FOUND)
+
+
 @api_view(['GET'])
 def Login_status(request):
     if request.user.is_authenticated:

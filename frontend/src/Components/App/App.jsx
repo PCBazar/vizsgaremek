@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes, Link, useNavigate } from 'react-router-dom';
 import Lista from '../List/List';
 import "./app.css";
 import Login from "../Login/Login";
@@ -7,11 +7,17 @@ import Logout from "../Logout/Logout";
 import Registration from '../Registration/Registration';
 import Product from "../Product/Product";
 import Add from "../Add/Add";
+import Cart from "../Cart/Cart";
 
 function App() {
   const [items, setItems] = useState([]);
   const [categories, setCategories] = useState([]);
   const isLoggedIn = localStorage.getItem('authTokens') !== null;
+  const [cart, setCart] = useState(() => {
+    // Inicializáljuk a cart-ot a localStorage-ból
+    const savedCart = localStorage.getItem('cart');
+    return savedCart ? JSON.parse(savedCart) : [];
+  });
 
   useEffect(() => {
     fetch('http://127.0.0.1:8000/api/GetAll/')
@@ -23,6 +29,24 @@ function App() {
       .catch(error => console.error('Error fetching data:', error));
   }, []);
 
+  const addToCart = (item) => {
+    setCart(prevCart => {
+      const existingItem = prevCart.find(cartItem => cartItem.id === item.id);
+      const updatedCart = existingItem
+        ? prevCart.map(cartItem =>
+          cartItem.id === item.id
+            ? { ...cartItem, quantity: (cartItem.quantity || 1) + 1 }
+            : cartItem
+        )
+        : [...prevCart, { ...item, quantity: 1 }];
+
+      // Frissítjük a localStorage-t az új állapottal
+      localStorage.setItem('cart', JSON.stringify(updatedCart));
+
+      return updatedCart;
+    });
+  };
+
   return (
     <div className="App">
       <Router>
@@ -31,17 +55,37 @@ function App() {
           {!isLoggedIn && <Link to="/login">Bejelentkezés</Link>}
           {isLoggedIn && <Logout />}
           <Link to="/add">Hirdetésfeladás</Link>
+          <CartLink isLoggedIn={isLoggedIn} />
         </nav>
         <Routes>
           <Route path="/" element={<Lista />} />
           <Route path="/login" element={<Login />} />
           <Route path="/registration" element={<Registration />} />
-          <Route path="/product/:id" element={<Product items={items} />} />
+          <Route path="/product/:id" element={<Product items={items} addToCart={addToCart} />} />
           <Route path="/add" element={<Add categories={categories} />} />
+          <Route path="/cart" element={<Cart cart={cart} setCart={setCart} />} />
         </Routes>
       </Router>
     </div>
   );
 }
+
+const CartLink = ({ isLoggedIn }) => {
+  const navigate = useNavigate();
+
+  const handleCartClick = () => {
+    if (!isLoggedIn) {
+      navigate('/login'); // Átirányítás a bejelentkezési oldalra, ha nem bejelentkezett
+    } else {
+      navigate('/cart'); // Kosár oldalra navigálás, ha bejelentkezett
+    }
+  };
+
+  return (
+    <Link to={isLoggedIn ? "/cart" : "/login"} onClick={handleCartClick} className="nav-link">
+    Kosár
+  </Link>
+  );
+};
 
 export default App;
