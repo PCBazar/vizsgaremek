@@ -8,6 +8,8 @@ import Registration from '../Registration/Registration';
 import Product from "../Product/Product";
 import Add from "../Add/Add";
 import Cart from "../Cart/Cart";
+import Change from "../Change/Change";
+import MyAds from "../MyAds/MyAds";
 
 function App() {
   const [items, setItems] = useState([]);
@@ -56,6 +58,7 @@ function App() {
           {isLoggedIn && <Logout />}
           <Link to="/add">Hirdetésfeladás</Link>
           <CartLink isLoggedIn={isLoggedIn} />
+          {isLoggedIn && <Link to="/MyAds">Hirdetéseim</Link>}
         </nav>
         <Routes>
           <Route path="/" element={<Lista />} />
@@ -64,6 +67,8 @@ function App() {
           <Route path="/product/:id" element={<Product items={items} addToCart={addToCart} />} />
           <Route path="/add" element={<Add categories={categories} />} />
           <Route path="/cart" element={<Cart cart={cart} setCart={setCart} />} />
+          <Route path="/MyAds" element={<MyAds />} />
+          <Route path="/Change/:id" element={<Change />} />
         </Routes>
       </Router>
     </div>
