@@ -13,7 +13,8 @@
 }
 
 .registration-container {
-    width: 400px;
+    width: 40%; 
+    max-width: 400px; 
     margin: 50px auto;
     padding: 20px;
     border: 1px solid #444;
@@ -56,7 +57,7 @@
 }
 
 .registration-container button {
-    width: 100%;
+    width: auto;
     background-color: #333333;
     color: #e0e0e0;
     padding: 10px 20px;
@@ -66,7 +67,9 @@
     cursor: pointer;
     transition: background-color 0.3s, transform 0.3s;
     text-decoration: none;
-    margin-top: 10px;
+    margin: 10px auto 0; 
+    display: block;
+
 }
 
 .registration-container button:hover {

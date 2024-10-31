@@ -16,10 +16,21 @@
 
 .filter-button {
     display: flex;
-    flex-direction: column-reverse; 
+    justify-content: center; 
+    align-items: center; 
+    width: 100%; 
+    padding: 10px 0; 
     box-shadow: 0px 4px 12px rgba(0, 212, 255, 0.2); 
-    width: 120px;
-    text-align: center;
+    background-color: #333333; 
+    color: #e0e0e0; 
+    border: none; 
+    border-radius: 5px; 
+    cursor: pointer; 
+    transition: background-color 0.3s; 
+}
+
+.filter-button:hover {
+    background-color: #9b59b6; 
 }
 
 

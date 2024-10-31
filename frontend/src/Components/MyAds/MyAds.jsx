@@ -30,17 +30,21 @@ const MyAds = () => {
   };
 
   return (
-    <div>
+    <div className="my-ads">
       <h2>Hirdetéseim</h2>
       {advertisements.length > 0 ? (
         <ul>
           {advertisements.map(ad => (
             <li key={ad.id}>
-              <h3>{ad.title}</h3>
-              <p>{ad.description}</p>
-              <p>Ár: {ad.price} Ft</p>
-              <Link to={`/Change/${ad.id}`}>Módosítás</Link>
-              <DeleteAdvert id={ad.id} onDelete={() => handleDelete(ad.id)} /> {/* Törlés gomb integrálása */}
+              <div className="ad-content">
+                <img src={ad.image} alt={ad.title} className="ad-image" /> {/* Kép hozzáadása */}
+                <div className="ad-details">
+                  <h3>{ad.title}</h3>
+                  <p>Ár: {ad.price} Ft</p>
+                  <Link to={`/Change/${ad.id}`}><button>Módosítás</button></Link>
+                  <DeleteAdvert id={ad.id} onDelete={() => handleDelete(ad.id)} /> {/* Törlés gomb integrálása */}
+                </div>
+              </div>
             </li>
           ))}
         </ul>

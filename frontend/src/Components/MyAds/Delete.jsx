@@ -7,7 +7,7 @@ const DeleteAdvert = ({ id, onDelete }) => {
     const handleDelete = async () => {
         const confirmDelete = window.confirm('Biztosan törölni szeretnéd a hirdetést?');
         if (confirmDelete) {
-            const response = await fetch(`http://127.0.0.1:8000/api/advertisements/${id}/delete/`, {
+            const response = await fetch(`http://127.0.0.1:8000/api/advertisements/${id}/`, {
                 method: 'DELETE',
                 credentials: 'include',
                 headers: {

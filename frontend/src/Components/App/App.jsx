@@ -10,9 +10,9 @@ import Add from "../Add/Add";
 import Cart from "../Cart/Cart";
 import Change from "../Change/Change";
 import MyAds from "../MyAds/MyAds";
+import OrderList from "../Orders/OrderList";
 
 function App() {
-  const [items, setItems] = useState([]);
   const [categories, setCategories] = useState([]);
   const isLoggedIn = localStorage.getItem('authTokens') !== null;
   const [cart, setCart] = useState(() => {
@@ -25,7 +25,6 @@ function App() {
     fetch('http://127.0.0.1:8000/api/GetAll/')
       .then(response => response.json())
       .then(data => {
-        setItems(data.products);
         setCategories(data.category);
       })
       .catch(error => console.error('Error fetching data:', error));
@@ -59,16 +58,18 @@ function App() {
           <Link to="/add">Hirdetésfeladás</Link>
           <CartLink isLoggedIn={isLoggedIn} />
           {isLoggedIn && <Link to="/MyAds">Hirdetéseim</Link>}
+          {isLoggedIn && <Link to="/Orders">Rendeléseim</Link>}
         </nav>
         <Routes>
           <Route path="/" element={<Lista />} />
           <Route path="/login" element={<Login />} />
           <Route path="/registration" element={<Registration />} />
-          <Route path="/product/:id" element={<Product items={items} addToCart={addToCart} />} />
+          <Route path="/product/:id" element={<Product addToCart={addToCart} />} />
           <Route path="/add" element={<Add categories={categories} />} />
           <Route path="/cart" element={<Cart cart={cart} setCart={setCart} />} />
           <Route path="/MyAds" element={<MyAds />} />
           <Route path="/Change/:id" element={<Change />} />
+          <Route path="/Orders" element={<OrderList />} />
         </Routes>
       </Router>
     </div>
@@ -78,7 +79,9 @@ function App() {
 const CartLink = ({ isLoggedIn }) => {
   const navigate = useNavigate();
 
-  const handleCartClick = () => {
+  const handleCartClick = (e) => {
+    e.preventDefault(); // Megakadályozza a Link alapértelmezett viselkedését
+
     if (!isLoggedIn) {
       navigate('/login'); // Átirányítás a bejelentkezési oldalra, ha nem bejelentkezett
     } else {
@@ -87,9 +90,9 @@ const CartLink = ({ isLoggedIn }) => {
   };
 
   return (
-    <Link to={isLoggedIn ? "/cart" : "/login"} onClick={handleCartClick} className="nav-link">
-    Kosár
-  </Link>
+    <a href="#" onClick={handleCartClick} className="nav-link">
+      Kosár
+    </a>
   );
 };
 

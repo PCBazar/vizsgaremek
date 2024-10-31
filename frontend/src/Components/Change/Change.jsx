@@ -24,8 +24,7 @@ const Change = () => {
                 setTitle(response.data.title);
                 setDescription(response.data.description);
                 setPrice(response.data.price);
-                setStockQuantity(response.data.stock_quantity); // Darabszám beállítása
-                setImage(response.data.image); // Kép beállítása, ha van
+                setStockQuantity(response.data.stock_quantity);
             } catch (error) {
                 console.error('Error fetching product data:', error);
             }
@@ -42,17 +41,17 @@ const Change = () => {
         formData.append('price', price);
         formData.append('stock_quantity', stockQuantity);
         if (image) {
-            formData.append('image', image); // Kép frissítése
+            formData.append('image', image); 
         }
 
         try {
             await axios.put(`http://127.0.0.1:8000/api/adverts/${id}/`, formData, {
                 headers: {
-                    'Content-Type': 'multipart/form-data', // Mivel fájlokat küldünk, ezt is meg kell adni
+                    'Content-Type': 'multipart/form-data',
                 },
             });
             alert('Hirdetés sikeresen frissítve!');
-            navigate('/MyAds'); // Visszairányítás a "Hirdetéseim" oldalra
+            navigate('/MyAds'); 
         } catch (error) {
             console.error('Error updating product:', error);
             alert('Hiba történt a hirdetés frissítésekor.');
@@ -62,12 +61,12 @@ const Change = () => {
     return (
         <div className="change">
             <div className='change-container'>
-                <h2>Hirdetés módosítása</h2>
+                <h2 className='change-h2'>Hirdetés módosítása</h2>
                 <form onSubmit={handleUpdate}>
                     <div className="form-group">
-                        <label>Cím:</label>
+                        <label className='change-label'>Cím:</label>
                         <input
-                            className='bevitel'
+                            className='change-input'
                             type="text"
                             value={title}
                             onChange={(e) => setTitle(e.target.value)}
@@ -75,18 +74,17 @@ const Change = () => {
                         />
                     </div>
                     <div className="form-group">
-                        <label>Leírás:</label>
+                        <label className='change-label'>Leírás:</label>
                         <textarea
-                            className='bevitel'
                             value={description}
                             onChange={(e) => setDescription(e.target.value)}
                             required
                         />
                     </div>
                     <div className="form-group">
-                        <label>Ár (Ft):</label>
+                        <label className='change-label'>Ár (Ft):</label>
                         <input
-                            className='bevitel'
+                            className='change-input'
                             type="number"
                             value={price}
                             onChange={(e) => setPrice(e.target.value)}
@@ -94,9 +92,9 @@ const Change = () => {
                         />
                     </div>
                     <div className="form-group">
-                        <label>Darabszám:</label>
+                        <label className='change-label'>Darabszám:</label>
                         <input
-                            className='bevitel'
+                            className='change-input'
                             type="number"
                             value={stockQuantity}
                             onChange={(e) => setStockQuantity(e.target.value)}
@@ -104,9 +102,9 @@ const Change = () => {
                         />
                     </div>
                     <div className="form-group">
-                        <label>Kép:</label>
+                        <label className='change-label'>Kép:</label>
                         <input
-                            className='bevitel'
+                            className='change-input'
                             type="file"
                             accept="image/*"
                             onChange={(e) => setImage(e.target.files[0])} // Kép beállítása

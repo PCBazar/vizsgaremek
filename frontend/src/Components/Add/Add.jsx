@@ -44,7 +44,8 @@ const Add = ({ categories }) => {
             alert('Hirdetés sikeresen feladva!');
             navigate('/');
         } else {
-            alert('Hiba történt a hirdetés feladása közben.');
+            alert('Be kell jelentkezned a hirdetés feladásához!.');
+            navigate('/login');
         }
 
     };

@@ -2,27 +2,32 @@ import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import "./product.css"
 
-const Product = ({ items, addToCart }) => {
+const Product = ({ addToCart }) => {
   const { id } = useParams();
-  const item = items.find(item => item.id === parseInt(id)); 
-
-  const [hasReloaded, setHasReloaded] = useState(
-    sessionStorage.getItem('hasReloaded') === 'true'
-  );
+  const [item, setItem] = useState(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    return () => {
-      sessionStorage.removeItem('hasReloaded');
+    // Adatok lekérése az API-ból
+    const fetchData = async () => {
+      try {
+        const response = await fetch(`http://127.0.0.1:8000/api/GetAll/`);
+        const data = await response.json();
+        
+        // Az item keresése a lekért adatokban
+        const foundItem = data.products.find(item => item.id === parseInt(id));
+        setItem(foundItem);
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      } finally {
+        setLoading(false); // Betöltés befejezve
+      }
     };
-  }, []);
 
-  useEffect(() => {
-    if (!item && !hasReloaded) {
-      setHasReloaded(true);
-      sessionStorage.setItem('hasReloaded', 'true');
-      window.location.reload();
-    }
-  }, [item, hasReloaded]);
+    fetchData();
+  }, [id]); // Az id változása esetén újra lefut
+
+  if (loading) return <div>Loading...</div>; // Betöltési állapot
 
   if (!item) return <div>Item not found</div>;
 

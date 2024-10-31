@@ -1,0 +1,93 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.my-ads {
+    width: 100%;
+    height: auto; /* Automatikus magasság */
+    display: flex;
+    flex-direction: column; /* Függőleges elrendezés */
+    align-items: center;
+    background-color: #121212;
+    padding: 20px;
+}
+
+.my-ads h2 {
+    font-size: 28px;
+    color: #e0e0e0;
+    margin-bottom: 20px;
+}
+
+.my-ads ul {
+    list-style-type: none;
+    width: 100%;
+    max-width: 800px; /* Max szélesség */
+    padding: 0;
+}
+
+.my-ads li {
+    background-color: #2a2a2a; /* Hirdetés háttér */
+    border: 1px solid #444;
+    border-radius: 8px;
+    padding: 15px;
+    margin-bottom: 15px;
+    transition: transform 0.3s, box-shadow 0.3s;
+    display: flex; /* Flexbox a kép és a szöveg elrendezéséhez */
+}
+
+.my-ads li:hover {
+    transform: scale(1.02);
+    box-shadow: 0 4px 20px rgba(0, 212, 255, 0.3);
+}
+
+.my-ads li h3 {
+    font-size: 24px;
+    color: #007bff; /* Cím szín */
+    margin-bottom: 10px;
+}
+
+.my-ads li p {
+    font-size: 18px;
+    color: #b0b0b0;
+}
+
+.my-ads li a {
+    color: #9b59b6; /* Módosítás link szín */
+    text-decoration: none;
+    margin-right: 10px; /* Kicsi térköz a gombok között */
+    font-weight: bold; /* Vastagabb betű */
+}
+
+.my-ads li a:hover {
+    text-decoration: underline; /* Aláhúzás hoverkor */
+}
+.my-ads li button {
+    background-color: #333333;
+    color: #e0e0e0;
+    border: none;
+    border-radius: 5px;
+    padding: 8px 15px;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.3s;
+}
+
+.my-ads li button:hover {
+    background-color: #9b59b6;
+    box-shadow: 0px 4px 8px rgba(0, 212, 255, 0.4);
+    transform: scale(1.05);
+}
+.ad-content {
+    display: flex; /* Kép és szöveg egymás melletti elrendezése */
+}
+.ad-image {
+    width: 100px; /* Kép szélessége */
+    height: auto; /* Automatikus magasság */
+    border-radius: 4px; /* Kép lekerekítése */
+    margin-right: 15px; /* Térköz a kép és a szöveg között */
+}
+
+.ad-details {
+    flex: 1; /* Szöveg rész tölti ki a maradék helyet */
+}

@@ -24,6 +24,7 @@ const Login = () => {
         const data = await response.json();
         if (response.ok) {
             console.log(data);
+            localStorage.setItem('userId', data.userId);
             localStorage.setItem('authTokens', JSON.stringify(data.token));
             setMessage(data.message || "Bejelentkezés sikeres");
             navigate('/');
@@ -63,10 +64,12 @@ const Login = () => {
                             required
                         />
                     </div>
-                    <button type="submit">Bejelentkezés</button>
-                    <p>
-                        <Link to="/registration"><button type="button">Regisztráció</button></Link>
-                    </p>
+                    <div className="button-container">
+                        <button type="submit">Bejelentkezés</button>
+                        <Link to="/registration" className='login-link'>
+                            <button type="button">Regisztráció</button>
+                        </Link>
+                    </div>
                 </form>
                 {message && <p>{message}</p>}
             </div>

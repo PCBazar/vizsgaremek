@@ -11,6 +11,7 @@ from django.middleware.csrf import get_token
 from rest_framework import status
 from rest_framework.permissions import IsAuthenticated
 from rest_framework import generics
+from rest_framework import viewsets
 
 
 
@@ -46,7 +47,7 @@ def Login_page(request):
         if user is not None:
             login(request, user)
             csrf_token = get_token(request)
-            return Response({"message": f"Sikeres bejelentkezés!", "status": "success","csrfToken": csrf_token}, status=status.HTTP_202_ACCEPTED)
+            return Response({'userId': user.id,"message": f"Sikeres bejelentkezés!", "status": "success","csrfToken": csrf_token}, status=status.HTTP_202_ACCEPTED)
         else:
             return Response({"message": "Sikertelen bejelentkezés!", "status": "error"}, status=status.HTTP_401_UNAUTHORIZED)
     else:
@@ -163,17 +164,13 @@ class AdvertisementUpdateView(generics.UpdateAPIView):
     def get_queryset(self):
         # Csak az adott felhasználó hirdetéseit engedjük módosítani
         return self.queryset.filter(owner=self.request.user)
-    
 
-class AdvertisementDeleteView(generics.DestroyAPIView):
+class AdvertisementViewSet(viewsets.ModelViewSet):
     queryset = models.Product.objects.all()
     serializer_class = serializers.ProductSerializer
-    permission_classes = [IsAuthenticated]
 
-    def get_queryset(self):
-        # Csak az adott felhasználó hirdetéseit engedjük törölni
-        return self.queryset.filter(owner=self.request.user)
-    
+
+
 class UserAdvertisementsView(generics.ListAPIView):
     serializer_class = serializers.ProductSerializer
     permission_classes = [IsAuthenticated]

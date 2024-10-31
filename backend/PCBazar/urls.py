@@ -1,6 +1,10 @@
-from django.urls import path,re_path
+from django.urls import path,re_path,include
 from . import views
 from django.views.generic import TemplateView
+from rest_framework.routers import DefaultRouter
+
+router = DefaultRouter()
+router.register(r'advertisements', views.AdvertisementViewSet)
 
 urlpatterns = [
     path('', views.indexPage, name="index"),
@@ -12,8 +16,8 @@ urlpatterns = [
     path('api/Add/', views.Add,name="Add"),
     path('api/cart/', views.Cart,name="Cart"),
     path('advertisements/<int:pk>/update/', views.AdvertisementUpdateView.as_view(), name='advertisement-update'),
-    path('advertisements/<int:pk>/delete/', views.AdvertisementDeleteView.as_view(), name='advertisement-delete'),
     path('api/adverts/<int:pk>/', views.UserAdvertisementsUpdateView.as_view(), name='advert-update'),
     path('api/adverts/', views.UserAdvertisementsView.as_view(), name='user-advertisements'),
+    path('api/', include(router.urls)),
     re_path(r'^.*$', TemplateView.as_view(template_name='index.html')),
 ]
