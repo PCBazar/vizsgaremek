@@ -17,8 +17,8 @@ const DeleteAdvert = ({ id, onDelete }) => {
 
             if (response.ok) {
                 alert('Hirdetés sikeresen törölve!');
-                onDelete(); // Frissítjük a hirdetések listáját a szülő komponensben
-                navigate('/'); // Visszairányítás a főoldalra
+                onDelete(); 
+                navigate('/'); 
             } else {
                 alert('Hiba történt a hirdetés törlésekor.');
             }

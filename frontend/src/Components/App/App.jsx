@@ -11,6 +11,7 @@ import Cart from "../Cart/Cart";
 import Change from "../Change/Change";
 import MyAds from "../MyAds/MyAds";
 import OrderList from "../Orders/OrderList";
+import OrderDetails from '../Orders/Orders';
 
 function App() {
   const [categories, setCategories] = useState([]);
@@ -70,6 +71,7 @@ function App() {
           <Route path="/MyAds" element={<MyAds />} />
           <Route path="/Change/:id" element={<Change />} />
           <Route path="/Orders" element={<OrderList />} />
+          <Route path="/order-details" element={<OrderDetails />} />
         </Routes>
       </Router>
     </div>

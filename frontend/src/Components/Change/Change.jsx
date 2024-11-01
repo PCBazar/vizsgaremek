@@ -6,17 +6,17 @@ import "./change.css";
 axios.defaults.headers.common['X-CSRFToken'] = document.cookie.match(/csrftoken=([^;]+)/)[1];
 
 const Change = () => {
-    const { id } = useParams(); // az URL-ből kapott id paraméter
+    const { id } = useParams(); 
     const navigate = useNavigate();
 
-    // Állapotok a hirdetés adataihoz
+    
     const [title, setTitle] = useState('');
     const [description, setDescription] = useState('');
     const [price, setPrice] = useState('');
-    const [stockQuantity, setStockQuantity] = useState(''); // Darabszám állapot
-    const [image, setImage] = useState(null); // Kép állapot
+    const [stockQuantity, setStockQuantity] = useState(''); 
+    const [image, setImage] = useState(null); 
 
-    // Az adatok betöltése, amikor a komponens betöltődik
+   
     useEffect(() => {
         const fetchProduct = async () => {
             try {
@@ -32,7 +32,7 @@ const Change = () => {
         fetchProduct();
     }, [id]);
 
-    // Hirdetés frissítése
+   
     const handleUpdate = async (event) => {
         event.preventDefault();
         const formData = new FormData();
@@ -107,7 +107,7 @@ const Change = () => {
                             className='change-input'
                             type="file"
                             accept="image/*"
-                            onChange={(e) => setImage(e.target.files[0])} // Kép beállítása
+                            onChange={(e) => setImage(e.target.files[0])} 
                         />
                     </div>
                     <button type="submit" className="submit-button">Mentés</button>

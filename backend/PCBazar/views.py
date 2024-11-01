@@ -186,6 +186,13 @@ class UserAdvertisementsUpdateView(generics.RetrieveUpdateAPIView):
     def get_queryset(self):
         return models.Product.objects.filter(seller=self.request.user)
 
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def UserTransactions(request):
+    transactions = models.Transaction.objects.filter(buyer=request.user)
+    serializer = serializers.TransactionSerializer(transactions, many=True)
+    return Response(serializer.data, status=status.HTTP_200_OK)
+
 
 @api_view(['GET'])
 def Login_status(request):

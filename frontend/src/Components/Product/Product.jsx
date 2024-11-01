@@ -8,26 +8,26 @@ const Product = ({ addToCart }) => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // Adatok lekérése az API-ból
+    
     const fetchData = async () => {
       try {
         const response = await fetch(`http://127.0.0.1:8000/api/GetAll/`);
         const data = await response.json();
         
-        // Az item keresése a lekért adatokban
+        
         const foundItem = data.products.find(item => item.id === parseInt(id));
         setItem(foundItem);
       } catch (error) {
         console.error('Error fetching data:', error);
       } finally {
-        setLoading(false); // Betöltés befejezve
+        setLoading(false); 
       }
     };
 
     fetchData();
-  }, [id]); // Az id változása esetén újra lefut
+  }, [id]); 
 
-  if (loading) return <div>Loading...</div>; // Betöltési állapot
+  if (loading) return <div>Loading...</div>; 
 
   if (!item) return <div>Item not found</div>;
 

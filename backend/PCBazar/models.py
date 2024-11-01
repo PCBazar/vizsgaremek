@@ -19,7 +19,7 @@ class Product(models.Model):
     stock_quantity = models.PositiveIntegerField(default=0)
     category = models.ForeignKey(Category,on_delete=models.CASCADE)
     seller = models.ForeignKey(User, on_delete=models.CASCADE)
-    description = models.CharField(max_length=1000, null=False, blank=False)
+    description = models.CharField(max_length=3000, null=False, blank=False)
     image = models.ImageField(upload_to="static/images", default='static/images/default.png')
     def __str__(self) -> str:
         return self.title

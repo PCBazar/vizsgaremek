@@ -19,5 +19,6 @@ urlpatterns = [
     path('api/adverts/<int:pk>/', views.UserAdvertisementsUpdateView.as_view(), name='advert-update'),
     path('api/adverts/', views.UserAdvertisementsView.as_view(), name='user-advertisements'),
     path('api/', include(router.urls)),
+    path('api/user/transactions/', views.UserTransactions, name="user_transactions"),
     re_path(r'^.*$', TemplateView.as_view(template_name='index.html')),
 ]
