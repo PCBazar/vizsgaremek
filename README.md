@@ -9,24 +9,23 @@ Scripts\activate
 pip install -r requirements.txt
 ```  
 ```bash
-cd backend 
-``` 
-
-*Először telepítsük a frontend részt, majd indítsuk el a szervert a következő paranccsal:  
-```bash
-py manage.py runserver  
-```
-
-
-Telepítés:  
-
-frontend: (frontend/cmd)  
+cd frontend 
+```   
 ```bash
 npm install 
 ``` 
 ```bash
 npm run build 
 ``` 
+```bash
+cd.. 
+```
+```bash
+cd backend
+```
+```bash
+py manage.py runserver  
+```
 
 
 url:  
