@@ -33,28 +33,13 @@
   margin-bottom: 5px; 
   color: #e0e0e0; 
   height: 80px; 
-  text-decoration: none !important;
 }
 
 .card-text {
   margin-bottom: 10px; 
   color: #ccc; 
   font-size: 0.9em; 
-  text-decoration: none !important;
-}
 
-.card-button {
-  padding: 10px 15px; 
-  background-color: #007bff; 
-  color: white; 
-  border: none; 
-  border-radius: 5px; 
-  cursor: pointer; 
-  transition: background-color 0.3s; 
-}
-
-.card-button:hover {
-  background-color: #0056b3; 
 }
 .card-link{
   text-decoration: none;

@@ -5,18 +5,20 @@
 }
 
 .my-ads {
-    width: 100%;
+    width: 100vw;
     height: auto; 
     display: flex;
     flex-direction: column; 
     background-color: #121212;
     padding: 20px;
+    align-items: center; /* Középre igazítás */
 }
 
 .my-ads h2 {
     font-size: 28px;
     color: #e0e0e0;
     margin-bottom: 20px;
+    padding: 60px;
 }
 
 .my-ads ul {
@@ -34,6 +36,7 @@
     margin-bottom: 15px;
     transition: transform 0.3s, box-shadow 0.3s;
     display: flex; 
+    flex-direction: column; /* Függőleges elrendezés */
 }
 
 .my-ads li:hover {
@@ -62,6 +65,7 @@
 .my-ads li a:hover {
     text-decoration: underline; 
 }
+
 .my-ads li button {
     background-color: #333333;
     color: #e0e0e0;
@@ -70,22 +74,28 @@
     padding: 8px 15px;
     cursor: pointer;
     transition: background-color 0.3s, transform 0.3s;
+    width: 100px; /* Egységes gombszélesség */
+    margin: 5px; /* Kisebb margó a gombok között */
 }
 
-.my-ads li button:hover {
-    background-color: #9b59b6;
-    box-shadow: 0px 4px 8px rgba(0, 212, 255, 0.4);
-    transform: scale(1.05);
-}
 .ad-content {
-    display: flex; 
+    display: flex;
+    flex-direction: column; /* Függőleges elrendezés */
+    align-items: center; /* Középre igazítás */
 }
+
 .ad-image {
     width: 100px; 
     height: auto; 
     border-radius: 4px; 
-    margin-right: 15px; 
+    margin-bottom: 15px; /* Függőleges margó kép és részletek között */
 }
+
 .ad-details {
-    flex: 1; 
+    width: 100%; /* Részletek kitöltik a rendelkezésre álló területet */
+    text-align: center; /* Középre igazított szöveg */
+}
+
+.ad-details h3, .ad-details p {
+    margin-bottom: 10px; /* Kisebb margó az elemek között */
 }

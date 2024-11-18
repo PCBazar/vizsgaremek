@@ -1,11 +1,50 @@
 body{
+  background-color: #121212;
   margin: 0;
   padding: 0;
-  background-color: #121212; 
+}
+button {
+  width: 100%;
+  background-color: #333333; 
   color: #e0e0e0; 
-  font-family: 'Roboto', sans-serif;
-  overflow-x: hidden;
-
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.3s;
+  text-decoration: none;
+  margin-top: 10px;
 }
 
-
+button:hover {
+  background-color: #9b59b6; 
+  box-shadow: 0px 4px 8px rgba(0, 212, 255, 0.4);
+  transform: scale(1.05); /* 5% nagyobb lesz*/
+}
+input{
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #555;
+  border-radius: 5px;
+  background-color: #1f1f1f;
+  color: #e0e0e0;
+  outline: none; /* outline: none; CSS tulajdonságot akkor használjuk, ha el szeretnénk távolítani az elemek körüli fókuszvonalat (outline), amely általában akkor jelenik meg, amikor egy felhasználó az egérrel vagy a billentyűzettel fókuszál egy elemet (pl. input mezőt vagy button-t). */
+  margin-bottom: 1px;
+  box-sizing: border-box;
+}
+input:focus{
+border: 1px solid #9b59b6;
+}
+label{
+  display: block;
+  color: #b0b0b0;
+  font-size: 0.9em;
+  margin-bottom: 5px;
+}
+p {
+  text-align: center;
+  color: #ff4c4c;
+  font-size: 0.9em;
+  margin-top: 10px;
+}

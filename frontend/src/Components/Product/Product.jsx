@@ -31,7 +31,7 @@ const Product = ({ addToCart }) => {
 
   if (!item) return <div>Item not found</div>;
 
-  const handleAddToCart = () => {
+  function handleAddToCart(){
     addToCart({
       id: item.id,
       title: item.title,

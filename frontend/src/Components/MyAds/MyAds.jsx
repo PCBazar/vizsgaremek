@@ -12,7 +12,7 @@ const MyAds = () => {
     if (isLoggedIn) {
       const fetchAdvertisements = async () => {
         try {
-          const response = await axios.get('http://127.0.0.1:8000/api/adverts/'); 
+          const response = await axios.get('http://127.0.0.1:8000/api/addList/'); 
           setAdvertisements(response.data);
         } catch (error) {
           console.error('Error fetching advertisements:', error);

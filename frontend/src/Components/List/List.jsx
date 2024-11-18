@@ -38,7 +38,7 @@ const Lista = () => {
             <Search onSearch={handleSearch} />
             <div className="row">
                 {filteredProducts.map(item => (
-                    <div className="col-md-4" key={item.id}>
+                    <div className="col-12 col-md-4 col-lg-6" key={item.id}>
                         <Card item={item} />
                     </div>
                 ))}

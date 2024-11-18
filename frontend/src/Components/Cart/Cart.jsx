@@ -3,11 +3,12 @@ import "./cart.css";
 import { useNavigate } from 'react-router-dom';
 
 const Cart = ({ cart, setCart }) => {
+  const username = localStorage.getItem('username') || "";
   const [paymentMethod, setPaymentMethod] = useState('');
   const navigate = useNavigate();
 
   useEffect(() => {
-    const savedCart = localStorage.getItem('cart');
+    const savedCart = localStorage.getItem(`cart_${username}`);
     if (savedCart) {
       setCart(JSON.parse(savedCart));
     }
@@ -18,7 +19,7 @@ const Cart = ({ cart, setCart }) => {
   }, [cart]);
 
   const updateLocalStorage = (updatedCart) => {
-    localStorage.setItem('cart', JSON.stringify(updatedCart));
+    localStorage.setItem(`cart_${username}`, JSON.stringify(updatedCart));
   };
 
   const removeItemFromCart = (productId) => {

@@ -20,7 +20,7 @@ const Change = () => {
     useEffect(() => {
         const fetchProduct = async () => {
             try {
-                const response = await axios.get(`http://127.0.0.1:8000/api/adverts/${id}/`);
+                const response = await axios.get(`http://127.0.0.1:8000/api/advertisements/${id}/`);
                 setTitle(response.data.title);
                 setDescription(response.data.description);
                 setPrice(response.data.price);
@@ -45,7 +45,7 @@ const Change = () => {
         }
 
         try {
-            await axios.put(`http://127.0.0.1:8000/api/adverts/${id}/`, formData, {
+            await axios.put(`http://127.0.0.1:8000/api/advertisements/${id}/`, formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
                 },

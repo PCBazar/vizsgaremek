@@ -1,22 +1,15 @@
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
-.Container {
-  padding: 20px;
-  width: 100%;
+.container{
+  width: 100vw;
   height: 100vh;
+  padding: 20px;
 }
-.row {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
+.row{
+  display: flex; 
+  flex-direction: row; 
+  flex-wrap: wrap; 
   justify-content: flex-start; 
   align-items: flex-start; 
   align-content: flex-start; 
-  margin-left: 190px; 
   gap: 10px; 
+  margin-left: 190px;
 }
-

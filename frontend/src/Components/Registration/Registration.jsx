@@ -1,9 +1,7 @@
 import "./registration.css"
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 
 const Registration = () => {
-    const navigate = useNavigate();
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [email, setEmail] = useState('');
@@ -30,7 +28,7 @@ const Registration = () => {
 
         const data = await response.json();
         setMessage(data.message);
-        navigate('/login');
+        window.location.href = "/login";
     };
 
     return (

@@ -1,10 +1,8 @@
 import React, { useState } from 'react';
 import "./login.css";
 import { Link } from 'react-router-dom';
-import { useNavigate } from 'react-router-dom';
 
 const Login = () => {
-    const navigate = useNavigate();
     const [inputUsername, setInputUsername] = useState('');
     const [password, setPassword] = useState('');
     const [message, setMessage] = useState('');
@@ -22,16 +20,16 @@ const Login = () => {
         });
 
         const data = await response.json();
-        if (response.ok) {
+        if (response.ok && data.status === 'success') {
             console.log(data);
             localStorage.setItem('userId', data.userId);
+            localStorage.setItem('username',JSON.stringify(data.username));
             localStorage.setItem('authTokens', JSON.stringify(data.token));
-            setMessage(data.message || "Bejelentkezés sikeres");
-            navigate('/');
-            window.location.reload();
+            setMessage(data.message);
+            window.location.href = '/';
         }
         else {
-            setMessage(data.message || "Hiba történt a bejelentkezéskor");
+            setMessage(data.message);
         }
     };
 

@@ -1,17 +1,13 @@
 from django.shortcuts import render
-from . import serializers
+from . import serializers,models
 from rest_framework.decorators import api_view,permission_classes
-from . import models
 from django.http import JsonResponse
 from django.contrib.auth import login, authenticate,logout
 from rest_framework.response import Response
 from django.contrib.auth.models import User
-from rest_framework import status
-from django.middleware.csrf import get_token
-from rest_framework import status
+from rest_framework import status,generics,viewsets
 from rest_framework.permissions import IsAuthenticated
-from rest_framework import generics
-from rest_framework import viewsets
+
 
 
 
@@ -38,16 +34,14 @@ def GetAll(request):
 
 @api_view(["POST"])
 def Login_page(request):
-    csrf_token = get_token(request)
     if request.content_type == 'application/json':
         data = request.data
-        username = data.get('username')
-        password = data.get('password')
-        user = authenticate(username=username, password=password)
+        _username = data.get('username')
+        _password = data.get('password')
+        user = authenticate(username=_username, password=_password)
         if user is not None:
             login(request, user)
-            csrf_token = get_token(request)
-            return Response({'userId': user.id,"message": f"Sikeres bejelentkezés!", "status": "success","csrfToken": csrf_token}, status=status.HTTP_202_ACCEPTED)
+            return Response({'userId': user.id,"message": f"Sikeres bejelentkezés!",'username': _username, "status": "success",}, status=status.HTTP_202_ACCEPTED)
         else:
             return Response({"message": "Sikertelen bejelentkezés!", "status": "error"}, status=status.HTTP_401_UNAUTHORIZED)
     else:
@@ -76,15 +70,13 @@ def Registration(request):
 
 @api_view(["POST"])
 def Logout_user(request):
-        csrf_token = get_token(request)
         logout(request)
-        return Response({"message": "Sikeres kijelentkezés!", "csrfToken": csrf_token}, status=status.HTTP_200_OK)
+        return Response({"message": "Sikeres kijelentkezés!"}, status=status.HTTP_200_OK)
     
     
 @api_view(['POST'])
 @permission_classes([IsAuthenticated]) 
 def Add(request):
-    csrf_token = get_token(request)
     # Kérési adatok beolvasása
     title = request.data.get('title')
     description = request.data.get('description')
@@ -114,13 +106,12 @@ def Add(request):
     product.save()
     serializer = serializers.ProductSerializer(product)
     
-    return Response({'product': serializer.data, 'csrfToken': csrf_token}, status=status.HTTP_201_CREATED)
+    return Response({'product': serializer.data}, status=status.HTTP_201_CREATED)
 
 
 @api_view(['POST'])
 @permission_classes([IsAuthenticated]) 
 def Cart(request):
-    csrf_token = get_token(request)
 
     # Kérési adatok beolvasása
     product_id = request.data.get('product_id')
@@ -151,7 +142,7 @@ def Cart(request):
         product.stock_quantity -= quantity
         product.save()
 
-        return Response({'message': 'Tranzakció sikeresen létrehozva.', 'transaction_id': transaction.id, 'csrfToken': csrf_token}, status=status.HTTP_201_CREATED)
+        return Response({'message': 'Tranzakció sikeresen létrehozva.', 'transaction_id': transaction.id,}, status=status.HTTP_201_CREATED)
 
     except models.Product.DoesNotExist:
         return Response({'error': 'A megadott termék nem létezik.'}, status=status.HTTP_404_NOT_FOUND)
@@ -178,13 +169,6 @@ class UserAdvertisementsView(generics.ListAPIView):
     def get_queryset(self):
         return models.Product.objects.filter(seller=self.request.user)
 
-    
-class UserAdvertisementsUpdateView(generics.RetrieveUpdateAPIView):
-    serializer_class = serializers.ProductSerializer
-    permission_classes = [IsAuthenticated]
-
-    def get_queryset(self):
-        return models.Product.objects.filter(seller=self.request.user)
 
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
@@ -192,13 +176,4 @@ def UserTransactions(request):
     transactions = models.Transaction.objects.filter(buyer=request.user)
     serializer = serializers.TransactionSerializer(transactions, many=True)
     return Response(serializer.data, status=status.HTTP_200_OK)
-
-
-@api_view(['GET'])
-def Login_status(request):
-    if request.user.is_authenticated:
-        return Response({"is_logged_in": True, "username": request.user.username}, status=status.HTTP_200_OK)
-    else:
-        return Response({"is_logged_in": False}, status=status.HTTP_200_OK)       
-
 

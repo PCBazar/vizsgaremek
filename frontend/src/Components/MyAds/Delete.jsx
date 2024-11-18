@@ -18,7 +18,7 @@ const DeleteAdvert = ({ id, onDelete }) => {
             if (response.ok) {
                 alert('Hirdetés sikeresen törölve!');
                 onDelete(); 
-                navigate('/'); 
+                window.location.href="/" 
             } else {
                 alert('Hiba történt a hirdetés törlésekor.');
             }

@@ -7,8 +7,8 @@ const Card = ({ item }) => {
 
     return (
         <Link className='card-link' to={`/product/${item.id}`}>
-            <div className="card" style={{ width: "200px" }}>
-                <img className="card-img-top" src={item.image} alt={item.title} title={item.title} style={{ width: "200px", height: "200px" }} />
+            <div className="card">
+                <img className="card-img-top" src={item.image} alt={item.title} title={item.title} />
                 <div className="card-body">
                     <h4 className="card-title">{item.title}</h4>
                     <p className="card-text">{item.price} Ft</p>

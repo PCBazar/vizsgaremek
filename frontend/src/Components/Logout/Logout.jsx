@@ -1,6 +1,5 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import "./logout.css";
 
 const Logout = () => {
     const navigate = useNavigate();
@@ -25,11 +24,11 @@ const Logout = () => {
                 console.log('Logout response:', data);
                 alert(data.message);
 
-         
+                localStorage.removeItem("userId");
                 localStorage.removeItem("authTokens");
+                localStorage.removeItem('username');
 
-                navigate('/');
-                window.location.reload();
+                window.location.href="/"
             } else {
                 const errorData = await response.json();
                 alert(`Hiba: ${errorData.message}`);
