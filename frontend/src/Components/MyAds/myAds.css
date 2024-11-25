@@ -1,101 +1,74 @@
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
-.my-ads {
-    width: 100vw;
-    height: auto; 
-    display: flex;
-    flex-direction: column; 
+.my-ads{
+    width: calc(100% - 20px); /* Kompenzálás */
+    height: flex;
+    flex-direction: column;
     background-color: #121212;
-    padding: 20px;
-    align-items: center; /* Középre igazítás */
+    margin-left: 20px;
 }
 
-.my-ads h2 {
+.my-ads h2{
     font-size: 28px;
     color: #e0e0e0;
     margin-bottom: 20px;
-    padding: 60px;
+    text-align: center;
+    padding: 40px;
+    margin-top: 40px;
 }
-
-.my-ads ul {
+.my-ads ul{
     list-style-type: none;
     width: 100%;
     max-width: 800px;
     padding: 0;
 }
-
-.my-ads li {
-    background-color: #2a2a2a; 
+.my-ads li{
     border: 1px solid #444;
-    border-radius: 8px;
+    border-radius: 10px;
     padding: 15px;
-    margin-bottom: 15px;
     transition: transform 0.3s, box-shadow 0.3s;
-    display: flex; 
-    flex-direction: column; /* Függőleges elrendezés */
+    display: flex;
+    margin-bottom: 20px;
 }
-
-.my-ads li:hover {
+.my-ads li:hover{
     transform: scale(1.02);
-    box-shadow: 0 4px 20px rgba(0, 212, 255, 0.3);
+    box-shadow: 0px 8px 20px rgba(192, 192, 192, 0.3), 
+                0px 4px 10px rgba(192, 192, 192, 0.2);
 }
-
-.my-ads li h3 {
+.my-ads li h3{
     font-size: 24px;
-    color: #007bff; 
+    color: #007bff;
     margin-bottom: 10px;
 }
-
-.my-ads li p {
+.my-ads li p{
     font-size: 18px;
-    color: #b0b0b0;
+    color: #b0b0b0
 }
-
-.my-ads li a {
+.my-ads li a{
     color: #9b59b6; 
     text-decoration: none;
-    margin-right: 10px; 
-    font-weight: bold; 
+    margin-right: 10px;
+    font-weight: bold;
 }
-
-.my-ads li a:hover {
-    text-decoration: underline; 
+.my-ads a:hover{
+    text-decoration: none;
 }
-
-.my-ads li button {
-    background-color: #333333;
-    color: #e0e0e0;
-    border: none;
-    border-radius: 5px;
-    padding: 8px 15px;
-    cursor: pointer;
-    transition: background-color 0.3s, transform 0.3s;
-    width: 100px; /* Egységes gombszélesség */
-    margin: 5px; /* Kisebb margó a gombok között */
-}
-
-.ad-content {
+.ad-content{
     display: flex;
-    flex-direction: column; /* Függőleges elrendezés */
-    align-items: center; /* Középre igazítás */
 }
-
-.ad-image {
-    width: 100px; 
-    height: auto; 
-    border-radius: 4px; 
-    margin-bottom: 15px; /* Függőleges margó kép és részletek között */
+.ad-image{
+    width: 100px;
+    height: auto;
+    border-radius: 4px;
+    margin-right: 15px;
 }
-
-.ad-details {
-    width: 100%; /* Részletek kitöltik a rendelkezésre álló területet */
-    text-align: center; /* Középre igazított szöveg */
+.ad-details{
+    flex: 1;
 }
-
-.ad-details h3, .ad-details p {
-    margin-bottom: 10px; /* Kisebb margó az elemek között */
+.ad-details button{
+    width: auto;
+}
+.modify:hover {
+    background-color: green;
+  }
+.delete-button:hover{
+    background-color: red;
 }

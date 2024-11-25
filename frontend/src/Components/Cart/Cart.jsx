@@ -108,7 +108,9 @@ const Cart = ({ cart, setCart }) => {
                     max={item.stock_quantity}
                     onChange={(e) => updateQuantity(item.id, parseInt(e.target.value))}
                   />
+                  <div className="torles">
                   <button onClick={() => removeItemFromCart(item.id)}>Törlés</button>
+                  </div>
                 </li>
               ))}
             </ul>
@@ -120,9 +122,11 @@ const Cart = ({ cart, setCart }) => {
               <option value="cash">Készpénz</option>
               <option value="paypal">PayPal</option>
             </select>
+            <div className="fizetes">
             <button onClick={handleCheckout} disabled={cart.length === 0 || !paymentMethod}>
               Fizetés
             </button>
+            </div>
           </div>
         )}
       </div>

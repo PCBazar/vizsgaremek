@@ -1,10 +1,20 @@
 .search-component{
     display: flex;
     justify-content: center;
-    margin: 50px 0;
-    padding: 10px;
+
+    padding: 30px;
 }
-.search-component input{
-    width: 20vw;
+.search-component input {
+    width: 30vw;
     font-size: 1.1em;
+    padding: 10px;
+    border-radius: 5px;
+    background-color: #242424; /* Mélyebb fekete */
+    color: #d4d4d4; /* Lágyabb fehér */
+    border: 1px solid #3e3e3e; /* Halvány szegély */
+    border-radius: 20px;
+}
+
+.search-component input::placeholder {
+    color: #9a9a9a; /* Közepesen világos placeholder */
 }

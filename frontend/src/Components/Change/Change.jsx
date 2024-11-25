@@ -110,7 +110,9 @@ const Change = () => {
                             onChange={(e) => setImage(e.target.files[0])} 
                         />
                     </div>
+                    <div className="mentes">
                     <button type="submit" className="submit-button">Mentés</button>
+                    </div>
                 </form>
             </div>
         </div>

@@ -24,7 +24,7 @@ const OrderList = () => {
 
     return (
       <div className="order-list">
-          <h2>Rendelések</h2>
+          <h2>Rendeléseim</h2>
           {orders.length === 0 ? ( 
               <p>Nincsenek rendeléseid. Kérlek, nézz vissza később!</p>
           ) : (
@@ -33,7 +33,9 @@ const OrderList = () => {
                       <li key={order.id}>
                           <p>Termék: {order.product.title}</p>
                           <p>Ár: {order.price} Ft</p>
+                          <div className="order-button">
                           <button onClick={() => handleDetailsClick(order)}>Részletek</button>
+                          </div>
                       </li>
                   ))}
               </ul>

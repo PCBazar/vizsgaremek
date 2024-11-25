@@ -94,8 +94,9 @@ const Registration = () => {
                             autocomplete="family-name"
                         />
                     </div>
-
+                    <div className="reg-button">
                     <button type="submit">Regisztráció</button>
+                    </div>
                 </form>
                 {message && <p>{message}</p>}
             </div>

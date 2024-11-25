@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { BrowserRouter as Router, Route, Routes, Link, useNavigate } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes, Link, useNavigate, Navigate } from 'react-router-dom';
 import Lista from '../List/List';
 import "./app.css";
 import Login from "../Login/Login";
@@ -17,39 +17,32 @@ function App() {
   const isLoggedIn = localStorage.getItem('authTokens') !== null;
   const username = localStorage.getItem('username') || ""; // Felhasználónév lekérdezése a localStorage-ből
 
-    const [cart, setCart] = useState(() => {
-        // Inicializáljuk a cart-ot a bejelentkezett felhasználó alapján
-        const savedCart = localStorage.getItem(`cart_${username}`);
-        return savedCart ? JSON.parse(savedCart) : [];
+  const [cart, setCart] = useState(() => {
+    const savedCart = localStorage.getItem(`cart_${username}`);
+    return savedCart ? JSON.parse(savedCart) : [];
+  });
+
+  const addToCart = (item) => {
+    setCart(prevCart => {
+      const existingItem = prevCart.find(cartItem => cartItem.id === item.id);
+
+      const updatedCart = existingItem
+        ? prevCart.map(cartItem =>
+            cartItem.id === item.id
+              ? { ...cartItem, quantity: (cartItem.quantity || 1) + 1 }
+              : cartItem
+          )
+        : [...prevCart, { ...item, quantity: 1 }];
+
+      localStorage.setItem(`cart_${username}`, JSON.stringify(updatedCart));
+      return updatedCart;
     });
-
-    const addToCart = (item) => {
-        setCart(prevCart => {
-            // Megkeressük, hogy van-e már ilyen elem a kosárban
-            const existingItem = prevCart.find(cartItem => cartItem.id === item.id);
-
-            // Ha van ilyen elem, akkor frissítjük a mennyiségét
-            const updatedCart = existingItem
-                ? prevCart.map(cartItem =>
-                    cartItem.id === item.id
-                        ? { ...cartItem, quantity: (cartItem.quantity || 1) + 1 }
-                        : cartItem
-                )
-                // Ha nincs ilyen elem, akkor hozzáadjuk az új elemet a kosárhoz
-                : [...prevCart, { ...item, quantity: 1 }];
-
-            // Elmentjük az új állapotot a localStorage-be, felhasználónév alapján
-            localStorage.setItem(`cart_${username}`, JSON.stringify(updatedCart));
-
-            // Visszatérünk az új kosár állapottal
-            return updatedCart;
-        });
-    };
-
+  };
 
   return (
     <div className="App">
       <Router>
+        <div className="nav-container">
         <nav>
           <Link to="/">Főoldal</Link>
           {!isLoggedIn && <Link to="/login">Bejelentkezés</Link>}
@@ -59,34 +52,98 @@ function App() {
           {isLoggedIn && <Link to="/MyAds">Hirdetéseim</Link>}
           {isLoggedIn && <Link to="/Orders">Rendeléseim</Link>}
         </nav>
+        </div>
         <Routes>
           <Route path="/" element={<Lista />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/registration" element={<Registration />} />
+          <Route
+            path="/login"
+            element={
+              <PublicRoute isLoggedIn={isLoggedIn}>
+                <Login />
+              </PublicRoute>
+            }
+          />
+          <Route
+            path="/registration"
+            element={
+              <PublicRoute isLoggedIn={isLoggedIn}>
+                <Registration />
+              </PublicRoute>
+            }
+          />
           <Route path="/product/:id" element={<Product addToCart={addToCart} />} />
-          <Route path="/add" element={<Add />} />
-          <Route path="/cart" element={<Cart cart={cart} setCart={setCart} />} />
-          <Route path="/MyAds" element={<MyAds />} />
-          <Route path="/Change/:id" element={<Change />} />
-          <Route path="/Orders" element={<OrderList />} />
-          <Route path="/order-details" element={<OrderDetails />} />
+          <Route
+            path="/add"
+            element={
+              <PrivateRoute isLoggedIn={isLoggedIn}>
+                <Add />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/cart"
+            element={
+              <PrivateRoute isLoggedIn={isLoggedIn}>
+                <Cart cart={cart} setCart={setCart} />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/MyAds"
+            element={
+              <PrivateRoute isLoggedIn={isLoggedIn}>
+                <MyAds />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/Change/:id"
+            element={
+              <PrivateRoute isLoggedIn={isLoggedIn}>
+                <Change />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/Orders"
+            element={
+              <PrivateRoute isLoggedIn={isLoggedIn}>
+                <OrderList />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/order-details"
+            element={
+              <PrivateRoute isLoggedIn={isLoggedIn}>
+                <OrderDetails />
+              </PrivateRoute>
+            }
+          />
         </Routes>
       </Router>
     </div>
   );
 }
 
+const PrivateRoute = ({ isLoggedIn, children }) => {
+  return isLoggedIn ? children : <Navigate to="/login" replace />;
+};
+
+const PublicRoute = ({ isLoggedIn, children }) => {
+  return !isLoggedIn ? children : <Navigate to="/" replace />;
+};
+
 const CartLink = ({ isLoggedIn }) => {
   const navigate = useNavigate();
 
   const handleCartClick = (e) => {
-    e.preventDefault(); // Megakadályozza a Link alapértelmezett viselkedését
-
+    e.preventDefault();
     if (!isLoggedIn) {
-      navigate('/login'); // Átirányítás a bejelentkezési oldalra, ha nem bejelentkezett
-      alert('A kosár funkció használatához be kell jelentkezned!')
+      navigate('/login');
+      alert('A kosár funkció használatához be kell jelentkezned!');
     } else {
-      navigate('/cart'); // Kosár oldalra navigálás, ha bejelentkezett
+      navigate('/cart');
     }
   };
 
@@ -101,13 +158,12 @@ const AddLink = ({ isLoggedIn }) => {
   const navigate = useNavigate();
 
   const handleAddClick = (e) => {
-    e.preventDefault(); // Megakadályozza a Link alapértelmezett viselkedését
-
+    e.preventDefault();
     if (!isLoggedIn) {
-      navigate('/login'); // Átirányítás a bejelentkezési oldalra, ha nem bejelentkezett
-      alert('A hirdetésfeladáshoz be kell jelentkezned!')
+      navigate('/login');
+      alert('A hirdetésfeladáshoz be kell jelentkezned!');
     } else {
-      navigate('/add'); // Kosár oldalra navigálás, ha bejelentkezett
+      navigate('/add');
     }
   };
 

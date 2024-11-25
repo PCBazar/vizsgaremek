@@ -141,7 +141,9 @@ function Add() {
                                     </option>
                                 ))}
                             </select>
+                            <div className="button-container">
                             <button type="submit">Hirdetés feladása</button>
+                            </div>
                         </div>
                     </div>
                 </form>

@@ -1,19 +1,19 @@
 import React from 'react';
-import  './filter.css'
+import './filter.css';
 
 const Filter = ({ categories, setSelectedCategory }) => {
-    const handleCategoryClick = (categoryId) => {
-        setSelectedCategory(categoryId);
-    };
-
     return (
-        <div className='filter-sidebar'>
-            <div className="filter-buttons">
-                <button className='filter-button' onClick={() => setSelectedCategory('')}>Minden</button>
+        <div className="filter-sidebar">
+            <div className="filter-items">
+                <div className="filter-item" onClick={() => setSelectedCategory('')}>Minden</div>
                 {categories.map((category) => (
-                    <button className='filter-button' key={category.id} onClick={() => handleCategoryClick(category.id)}>
+                    <div
+                        className="filter-item"
+                        key={category.id}
+                        onClick={() => setSelectedCategory(category.id)}
+                    >
                         {category.name}
-                    </button>
+                    </div>
                 ))}
             </div>
         </div>

@@ -40,8 +40,8 @@ const MyAds = () => {
                 <div className="ad-details">
                   <h3>{ad.title}</h3>
                   <p>Ár: {ad.price} Ft</p>
-                  <Link to={`/Change/${ad.id}`}><button>Módosítás</button></Link>
-                  <DeleteAdvert id={ad.id} onDelete={() => handleDelete(ad.id)} /> 
+                  <Link to={`/Change/${ad.id}`}><button className='modify'>Módosítás</button></Link>
+                  <DeleteAdvert id={ad.id} onDelete={() => handleDelete(ad.id)} />
                 </div>
               </div>
             </li>

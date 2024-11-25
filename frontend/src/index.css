@@ -5,7 +5,7 @@ body{
 }
 button {
   width: 100%;
-  background-color: #333333; 
+  background-color: #1f1f1f; 
   color: #e0e0e0; 
   padding: 10px 20px;
   border: none;
@@ -18,9 +18,8 @@ button {
 }
 
 button:hover {
-  background-color: #9b59b6; 
-  box-shadow: 0px 4px 8px rgba(0, 212, 255, 0.4);
-  transform: scale(1.05); /* 5% nagyobb lesz*/
+  background-color: #444;
+  transform: scale(1.05); 
 }
 input{
   width: 100%;
@@ -29,12 +28,9 @@ input{
   border-radius: 5px;
   background-color: #1f1f1f;
   color: #e0e0e0;
-  outline: none; /* outline: none; CSS tulajdonságot akkor használjuk, ha el szeretnénk távolítani az elemek körüli fókuszvonalat (outline), amely általában akkor jelenik meg, amikor egy felhasználó az egérrel vagy a billentyűzettel fókuszál egy elemet (pl. input mezőt vagy button-t). */
+  outline: none;
   margin-bottom: 1px;
   box-sizing: border-box;
-}
-input:focus{
-border: 1px solid #9b59b6;
 }
 label{
   display: block;
