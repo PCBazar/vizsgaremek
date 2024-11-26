@@ -2,7 +2,7 @@
     width: 150px;
     background-color: #1f1f1f;
     position: fixed;
-    height: 70%;
+    height: auto;
     overflow-y: auto;
     left: 20px;
     display: flex;

@@ -35,5 +35,56 @@ display: none;
 
 }
 
+.modal {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 300px;
+  padding: 20px;
+  background: #1f1f1f; /* Sötét háttér */
+  color: #e0e0e0; /* Világos szöveg */
+  border-radius: 10px;
+  box-shadow: 0px 8px 20px rgba(192, 192, 192, 0.3), 
+              0px 4px 10px rgba(192, 192, 192, 0.2);
+  text-align: center;
+}
+
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.8); /* Sötétebb átlátszó háttér */
+  backdrop-filter: blur(5px); /* Elmosódás hozzáadása */
+}
+
+.modal h2 {
+  margin-bottom: 15px;
+  color: #e0e0e0;
+  font-size: 1.5em;
+}
+
+.modal p {
+  margin-bottom: 20px;
+  color: #c0c0c0;
+  font-size: 1.2em;
+}
+
+.modal button {
+  width: 180px;
+  background-color: #121212;
+  color: #e0e0e0;
+  border: none;
+  padding: 10px 0;
+  font-size: 1.1em;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.modal button:hover {
+  background: #555;
+}
 
 

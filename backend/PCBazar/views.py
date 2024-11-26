@@ -85,12 +85,12 @@ def Add(request):
     category_id = request.data.get('category')
     
     if not all([title, description, price, stock_quantity, category_id]):
-        return Response({'error': 'Hiányzó mezők! Kérjük, töltsön ki minden mezőt.'}, status=status.HTTP_400_BAD_REQUEST)
+        return Response({'message': 'Hiányzó mezők! Kérjük, töltsön ki minden mezőt.'}, status=status.HTTP_400_BAD_REQUEST)
     
     try:
         category = models.Category.objects.get(id=category_id)
     except models.Category.DoesNotExist:
-        return Response({'error': 'A megadott kategória nem létezik.'}, status=status.HTTP_400_BAD_REQUEST)
+        return Response({'message': 'A megadott kategória nem létezik.'}, status=status.HTTP_400_BAD_REQUEST)
 
     product = models.Product(
         title=title,
@@ -106,7 +106,7 @@ def Add(request):
     product.save()
     serializer = serializers.ProductSerializer(product)
     
-    return Response({'product': serializer.data}, status=status.HTTP_201_CREATED)
+    return Response({'message': 'Sikeres hirdetésfeladás!', 'product': serializer.data}, status=status.HTTP_201_CREATED)
 
 
 @api_view(['POST'])

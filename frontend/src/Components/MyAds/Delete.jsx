@@ -1,12 +1,28 @@
-import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import Modal from "react-modal";
+import React, { useState } from "react";
 
 const DeleteAdvert = ({ id, onDelete }) => {
-    const navigate = useNavigate();
+    const [confirmModalOpen, setConfirmModalOpen] = useState(false);
+
+    const ConfirmModal = ({ isOpen, onConfirm, onCancel }) => {
+        return (
+          <Modal
+            isOpen={isOpen}
+            onRequestClose={onCancel}
+            contentLabel="Megerősítés"
+            className="modal"
+            overlayClassName="overlay"
+          >
+            <p>Biztosan törölni szeretnéd a hirdetést?</p>
+            <div>
+              <button onClick={onConfirm}>Igen</button>
+              <button onClick={onCancel}>Mégse</button>
+            </div>
+          </Modal>
+        );
+      };
 
     const handleDelete = async () => {
-        const confirmDelete = window.confirm('Biztosan törölni szeretnéd a hirdetést?');
-        if (confirmDelete) {
             const response = await fetch(`http://127.0.0.1:8000/api/advertisements/${id}/`, {
                 method: 'DELETE',
                 credentials: 'include',
@@ -16,19 +32,40 @@ const DeleteAdvert = ({ id, onDelete }) => {
             });
 
             if (response.ok) {
-                alert('Hirdetés sikeresen törölve!');
                 onDelete(); 
                 window.location.href="/" 
-            } else {
-                alert('Hiba történt a hirdetés törlésekor.');
             }
-        }
+        
     };
 
+    const openConfirmModal = () => { //megnyitja a modal ablakot
+        setConfirmModalOpen(true);
+      };
+    
+      const closeConfirmModal = () => {   // nem töröl visszalép
+        setConfirmModalOpen(false);
+      };
+     
+      const confirmDelete = () => {   // töröl
+        closeConfirmModal();
+        handleDelete();
+      };
+    
+
     return (
-        <button onClick={handleDelete} className="delete-button">
-            Törlés
+        <>
+        <button onClick={openConfirmModal} className="delete-button">
+          Törlés
         </button>
+        {/* Megerősítéshez használt modal */}
+        {confirmModalOpen && (
+          <ConfirmModal
+            isOpen={confirmModalOpen}
+            onConfirm={confirmDelete}
+            onCancel={closeConfirmModal}
+          />
+        )}
+      </>
     );
 };
 

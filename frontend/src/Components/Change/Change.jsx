@@ -1,21 +1,37 @@
 import React, { useEffect, useState } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import axios from 'axios';
+import Modal from "react-modal";
 import "./change.css";
+
+Modal.setAppElement("#root");
 
 axios.defaults.headers.common['X-CSRFToken'] = document.cookie.match(/csrftoken=([^;]+)/)[1];
 
 const Change = () => {
     const { id } = useParams(); 
-    const navigate = useNavigate();
-
-    
     const [title, setTitle] = useState('');
     const [description, setDescription] = useState('');
     const [price, setPrice] = useState('');
     const [stockQuantity, setStockQuantity] = useState(''); 
     const [image, setImage] = useState(null); 
+    const [modalOpen, setModalOpen] = useState(false);
+    const [message, setMessage] = useState('');
 
+  const CustomModal = ({ isOpen, onClose, message }) => {
+    return (
+      <Modal
+        isOpen={isOpen}
+        onRequestClose={onClose}
+        contentLabel="Figyelmeztetés"
+        className="modal"
+        overlayClassName="overlay"
+      >
+        <p>{message}</p>
+        <button onClick={onClose}>Bezárás</button>
+      </Modal>
+    );
+  };
    
     useEffect(() => {
         const fetchProduct = async () => {
@@ -50,13 +66,18 @@ const Change = () => {
                     'Content-Type': 'multipart/form-data',
                 },
             });
-            alert('Hirdetés sikeresen frissítve!');
-            navigate('/MyAds'); 
+            setModalOpen(true); 
+            setMessage('Sikeres mentés!')
         } catch (error) {
             console.error('Error updating product:', error);
-            alert('Hiba történt a hirdetés frissítésekor.');
+            setModalOpen(true);
+            setMessage('Sikerestelen mentés!')
         }
     };
+    const handleCloseModal = () => {
+        setModalOpen(false);
+        window.location.href = "/MyAds"; // Visszairányítás a főoldalra
+      };
 
     return (
         <div className="change">
@@ -114,6 +135,13 @@ const Change = () => {
                     <button type="submit" className="submit-button">Mentés</button>
                     </div>
                 </form>
+                {modalOpen && (
+          <CustomModal
+            isOpen={modalOpen}
+            onClose={handleCloseModal}
+            message={message}
+          />
+        )}
             </div>
         </div>
     );
