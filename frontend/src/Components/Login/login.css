@@ -1,15 +1,14 @@
 .login{
     width: 100%;
-    height: calc(100vh - 85px);
+    height: 100%;
     display: flex;
-    align-items: center;
     justify-content: center;
 }
 .login-container {
     width: 20%;
     max-width: 400px;
     min-width: 300px;
-    margin: 50px auto;
+    margin: 100px auto;
     padding: 20px;
     border: 1px solid #444; 
     border-radius: 10px; 
@@ -35,11 +34,8 @@
     font-size: 0.9em;
     margin-bottom: 5px;
 }
-
-.login-container button {
-    width: 150px; 
+.login-button{
     margin-right: 10px;
-    margin-left: 10px;
 }
 
 

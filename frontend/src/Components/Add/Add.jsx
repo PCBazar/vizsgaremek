@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import "./add.css";
-import Modal from "react-modal";
+import CustomModal from "../Modal/Modal";
 
-Modal.setAppElement("#root");
+
 
 function Add() {
   const [categories, setCategories] = useState([]);
@@ -14,21 +14,6 @@ function Add() {
   const [category, setCategory] = useState("");
   const [message, setMessage] = useState("");
   const [modalOpen, setModalOpen] = useState(false);
-
-  const CustomModal = ({ isOpen, onClose, message }) => {
-    return (
-      <Modal
-        isOpen={isOpen}
-        onRequestClose={onClose}
-        contentLabel="Figyelmeztetés"
-        className="modal"
-        overlayClassName="overlay"
-      >
-        <p>{message}</p>
-        <button onClick={onClose}>Bezárás</button>
-      </Modal>
-    );
-  };
 
   useEffect(() => {
     fetch("http://127.0.0.1:8000/api/GetAll/")

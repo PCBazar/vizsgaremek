@@ -75,4 +75,41 @@
     background-color: green;
     transform: scale(1.05);
   }
+
+  @media (max-width: 768px) {
+    .product {
+      grid-template-columns: 1fr;
+      padding: 20px;
+    }
+  
+    .product-image {
+      margin-bottom: 20px;
+    }
+  
+    .product-info {
+      align-items: flex-start;
+    }
+  
+    .product-title {
+      font-size: 2rem;
+      text-align: center;
+    }
+  
+    .product-seller,
+    .date,
+    .stock-info,
+    .product-price {
+      text-align: center;
+    }
+  
+    .description {
+      text-align: justify;
+    }
+  
+    .add-to-cart-button {
+      width: 100%;
+      margin-top: 15px;
+    }
+  }
+  
   

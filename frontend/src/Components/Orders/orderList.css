@@ -17,9 +17,10 @@
 
 .order-list ul {
     list-style-type: none;
-    width: 100%;
-    max-width: 800px; 
+    width: 90%;
+    max-width: 700px; 
     padding: 0;
+    margin: 50 auto;
 }
 
 .order-list li {

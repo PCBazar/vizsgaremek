@@ -3,6 +3,7 @@ import './filter.css';
 
 const Filter = ({ categories, setSelectedCategory }) => {
     return (
+        <div className="filter-container">
         <div className="filter-sidebar">
             <div className="filter-items">
                 <div className="filter-item" onClick={() => setSelectedCategory('')}>Minden</div>
@@ -16,6 +17,7 @@ const Filter = ({ categories, setSelectedCategory }) => {
                     </div>
                 ))}
             </div>
+        </div>
         </div>
     );
 };

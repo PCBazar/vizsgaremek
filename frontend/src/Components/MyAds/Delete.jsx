@@ -1,26 +1,8 @@
-import Modal from "react-modal";
 import React, { useState } from "react";
+import ConfirmModal from "../Modal/DeleteModal";
 
 const DeleteAdvert = ({ id, onDelete }) => {
     const [confirmModalOpen, setConfirmModalOpen] = useState(false);
-
-    const ConfirmModal = ({ isOpen, onConfirm, onCancel }) => {
-        return (
-          <Modal
-            isOpen={isOpen}
-            onRequestClose={onCancel}
-            contentLabel="Megerősítés"
-            className="modal"
-            overlayClassName="overlay"
-          >
-            <p>Biztosan törölni szeretnéd a hirdetést?</p>
-            <div>
-              <button onClick={onConfirm}>Igen</button>
-              <button onClick={onCancel}>Mégse</button>
-            </div>
-          </Modal>
-        );
-      };
 
     const handleDelete = async () => {
             const response = await fetch(`http://127.0.0.1:8000/api/advertisements/${id}/`, {
@@ -50,7 +32,6 @@ const DeleteAdvert = ({ id, onDelete }) => {
         closeConfirmModal();
         handleDelete();
       };
-    
 
     return (
         <>
@@ -68,5 +49,4 @@ const DeleteAdvert = ({ id, onDelete }) => {
       </>
     );
 };
-
 export default DeleteAdvert;

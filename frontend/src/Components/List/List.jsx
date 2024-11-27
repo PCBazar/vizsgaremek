@@ -34,8 +34,8 @@ const Lista = () => {
 
     return (
         <div className="Container">
-            <Filter categories={categories} setSelectedCategory={setSelectedCategory} />
             <Search onSearch={handleSearch} />
+            <Filter categories={categories} setSelectedCategory={setSelectedCategory} />
             <div className="row">
                 {filteredProducts.map(item => (
                     <div className="col-12 col-md-4 col-lg-6" key={item.id}>

@@ -1,46 +1,56 @@
-import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, {  useState } from "react";
+import CustomModal from "../Modal/Modal";
 
 const Logout = () => {
-    const navigate = useNavigate();
+    const [modalOpen, setModalOpen] = useState(false);
+    const [message, setMessage] = useState(false);
+  const handleLogout = async () => {
+    try {
+      const response = await fetch("http://127.0.0.1:8000/api/logout/", {
+        method: "POST",
+        credentials: "include",
+        headers: {
+          "Content-Type": "application/json",
+          "X-CSRFToken": document.cookie.match(/csrftoken=([^;]+)/)[1],
+        },
+      });
 
+      if (response.ok) {
+        const data = await response.json();
+        console.log("Logout response:", data);
+        setMessage(data.message);
+        setModalOpen(true);
 
-    const handleLogout = async () => {
-        try {
+        localStorage.removeItem("userId");
+        localStorage.removeItem("authTokens");
+        localStorage.removeItem("username");
 
-
-
-            const response = await fetch('http://127.0.0.1:8000/api/logout/', {
-                method: 'POST', 
-                credentials: 'include', 
-                headers: {
-                    'Content-Type': 'application/json',
-                    'X-CSRFToken': document.cookie.match(/csrftoken=([^;]+)/)[1], 
-                },
-            });
-
-            if (response.ok) {
-                const data = await response.json();
-                console.log('Logout response:', data);
-                alert(data.message);
-
-                localStorage.removeItem("userId");
-                localStorage.removeItem("authTokens");
-                localStorage.removeItem('username');
-
-                window.location.href="/"
-            } else {
-                const errorData = await response.json();
-                alert(`Hiba: ${errorData.message}`);
-            }
-        } catch (error) {
-            console.error('Hiba történt a kijelentkezés közben:', error);
-        }
-    };
-
-    return (
-        <a href="#" onClick={handleLogout}>Kijelentkezés</a>
-    );
+      } else {
+        const errorData = await response.json();
+        setModalOpen(true);
+        setMessage(`Hiba: ${errorData.message}`);
+      }
+    } catch (error) {
+      setMessage(`Hiba történt a kijelentkezés közben: ${error.message}`);
+      setModalOpen(true);
+    }
+  };
+  const handleCloseModal = () => {
+    setModalOpen(false);
+    window.location.href = "/";
+  };
+  return (
+    <>
+      <a href="#" onClick={handleLogout}>
+        Kijelentkezés
+      </a>
+      <CustomModal
+        isOpen={modalOpen}
+        onClose={handleCloseModal}
+        message={message}
+     />
+    </>
+  );
 };
 
 export default Logout;

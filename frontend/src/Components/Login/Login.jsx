@@ -63,7 +63,7 @@ const Login = () => {
                         />
                     </div>
                     <div className="button-container">
-                        <button type="submit">Bejelentkezés</button>
+                        <div className='login-button'><button type="submit">Bejelentkezés</button></div>
                         <Link to="/registration" className='login-link'>
                             <button type="button">Regisztráció</button>
                         </Link>

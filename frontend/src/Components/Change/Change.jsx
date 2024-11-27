@@ -1,10 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
-import Modal from "react-modal";
 import "./change.css";
-
-Modal.setAppElement("#root");
+import CustomModal from "../Modal/Modal";
 
 axios.defaults.headers.common['X-CSRFToken'] = document.cookie.match(/csrftoken=([^;]+)/)[1];
 
@@ -17,21 +15,6 @@ const Change = () => {
     const [image, setImage] = useState(null); 
     const [modalOpen, setModalOpen] = useState(false);
     const [message, setMessage] = useState('');
-
-  const CustomModal = ({ isOpen, onClose, message }) => {
-    return (
-      <Modal
-        isOpen={isOpen}
-        onRequestClose={onClose}
-        contentLabel="Figyelmeztetés"
-        className="modal"
-        overlayClassName="overlay"
-      >
-        <p>{message}</p>
-        <button onClick={onClose}>Bezárás</button>
-      </Modal>
-    );
-  };
    
     useEffect(() => {
         const fetchProduct = async () => {

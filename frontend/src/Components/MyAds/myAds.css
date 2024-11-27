@@ -1,9 +1,8 @@
 .my-ads{
-    width: calc(100% - 20px); /* Kompenzálás */
+    width: 100%;
     height: flex;
     flex-direction: column;
     background-color: #121212;
-    margin-left: 20px;
 }
 
 .my-ads h2{
@@ -12,13 +11,13 @@
     margin-bottom: 20px;
     text-align: center;
     padding: 40px;
-    margin-top: 40px;
+    padding-top: 40px;
 }
 .my-ads ul{
     list-style-type: none;
-    width: 100%;
-    max-width: 800px;
-    padding: 0;
+    width: 80%;
+    max-width: 600px;
+    padding-left: 50px;
 }
 .my-ads li{
     border: 1px solid #444;
@@ -72,54 +71,25 @@
 .delete-button:hover{
     background-color: red;
 }
-.modal {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 300px;
-    padding: 20px;
-    background: #1f1f1f; /* Sötét háttér */
-    color: #e0e0e0; /* Világos szöveg */
-    border-radius: 10px;
-    box-shadow: 0px 8px 20px rgba(192, 192, 192, 0.3), 
-                0px 4px 10px rgba(192, 192, 192, 0.2);
-    text-align: center;
+  @media (max-width: 768px) {
+.my-ads{
+        height: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+.my-ads ul{
+        width: 90%;
   }
-  
-  .overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: rgba(0, 0, 0, 0.8); /* Sötétebb átlátszó háttér */
-    backdrop-filter: blur(5px); /* Elmosódás hozzáadása */
+  .my-ads li h3{
+    font-size: 15px;
   }
-  
-  .modal h2 {
-    margin-bottom: 15px;
-    color: #e0e0e0;
-    font-size: 1.5em;
+  .my-ads li p{
+    font-size: 12px;
   }
-  
-  .modal p {
-    margin-bottom: 20px;
-    color: #c0c0c0;
-    font-size: 1.2em;
+  .delete-button{
+    font-size: small;
   }
-  
-  .modal button {
-    width: 180px;
-    background-color: #121212;
-    color: #e0e0e0;
-    border: none;
-    padding: 10px 0;
-    font-size: 1.1em;
-    border-radius: 5px;
-    cursor: pointer;
+  .modify{
+    font-size: small;
   }
-  
-  .modal button:hover {
-    background: #555;
-  }
+}
