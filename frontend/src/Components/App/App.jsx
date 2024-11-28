@@ -14,36 +14,14 @@ import OrderList from "../Orders/OrderList";
 import OrderDetails from "../Orders/Orders";
 import CartLink from "../ProtectedLink/CartLink";
 import AddLink from "../ProtectedLink/AddLink";
+import { CartProvider } from "../Cart/CartContext";
 
 function App() {
   const isLoggedIn = localStorage.getItem("authTokens") !== null;
-  const username = localStorage.getItem("username") || ""; // Felhasználónév lekérdezése a localStorage-ből
-
-  const [cart, setCart] = useState(() => {
-    const savedCart = localStorage.getItem(`cart_${username}`);
-    return savedCart ? JSON.parse(savedCart) : [];
-  });
-
-  const addToCart = (item) => {
-    setCart((prevCart) => {
-      const existingItem = prevCart.find((cartItem) => cartItem.id === item.id);
-
-      const updatedCart = existingItem
-        ? prevCart.map((cartItem) =>
-            cartItem.id === item.id
-              ? { ...cartItem, quantity: (cartItem.quantity || 1) + 1 }
-              : cartItem
-          )
-        : [...prevCart, { ...item, quantity: 1 }];
-
-      localStorage.setItem(`cart_${username}`, JSON.stringify(updatedCart));
-      return updatedCart;
-    });
-  };
-
   const [menuOpen, setMenuOpen] = useState(false);
 
   return (
+    <CartProvider>
     <div className="App">
       <Router>
         <div className="nav-container">
@@ -80,7 +58,7 @@ function App() {
           />
           <Route
             path="/product/:id"
-            element={<Product addToCart={addToCart} />}
+            element={<Product /*addToCart={addToCart}*/ />}
           />
           <Route
             path="/add"
@@ -94,7 +72,7 @@ function App() {
             path="/cart"
             element={
               <PrivateRoute isLoggedIn={isLoggedIn}>
-                <Cart cart={cart} setCart={setCart} />
+                <Cart /*cart={cart} setCart={setCart}*/ />
               </PrivateRoute>
             }
           />
@@ -133,6 +111,7 @@ function App() {
         </Routes>
       </Router>
     </div>
+  </CartProvider>
   );
 }
 const PrivateRoute = ({ isLoggedIn, children }) => {

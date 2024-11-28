@@ -112,40 +112,45 @@ def Add(request):
 @api_view(['POST'])
 @permission_classes([IsAuthenticated]) 
 def Cart(request):
-
-    # Kérési adatok beolvasása
-    product_id = request.data.get('product_id')
-    quantity = request.data.get('quantity')
-    payment_method = request.data.get('payment_method')
-
- 
-    if not all([product_id, quantity, payment_method]):
-        return Response({'error': 'Hiányzó mezők! Kérjük, töltsön ki minden mezőt.'}, status=status.HTTP_400_BAD_REQUEST)
-
+    transactions = []
     try:
-        product = models.Product.objects.get(id=product_id)
+        for item in request.data.get('items', []):
+            product_id = item.get('product_id')
+            quantity = item.get('quantity')
+            payment_method = item.get('payment_method')
 
-       
-        if quantity > product.stock_quantity:
-            return Response({'error': 'Nincs elegendő készlet.'}, status=status.HTTP_400_BAD_REQUEST)
+            if not all([product_id, quantity, payment_method]):
+                return Response({'error': 'Hiányzó mezők! Kérjük, töltsön ki minden mezőt.'}, status=status.HTTP_400_BAD_REQUEST)
 
+            product = models.Product.objects.get(id=product_id)
 
-        transaction = models.Transaction.objects.create(
-            buyer=request.user,  
-            product=product,
-            price=product.price * quantity, 
-            payment_method=payment_method,
-            stock_quantity=quantity
-        )
+            if quantity > product.stock_quantity:
+                return Response({'error': f'Nincs elegendő készlet a(z) {product.title} termékhez.'}, status=status.HTTP_400_BAD_REQUEST)
 
-   
-        product.stock_quantity -= quantity
-        product.save()
+            transaction = models.Transaction.objects.create(
+                buyer=request.user,  
+                product=product,
+                price=product.price * quantity, 
+                payment_method=payment_method,
+                stock_quantity=quantity
+            )
 
-        return Response({'message': 'Tranzakció sikeresen létrehozva.', 'transaction_id': transaction.id,}, status=status.HTTP_201_CREATED)
+            product.stock_quantity -= quantity
+            product.save()
+            
+            transactions.append({
+                'transaction_id': transaction.id,
+                'product_id': product.id,
+                'quantity': quantity,
+                'price': transaction.price,
+                'payment_method': payment_method
+            })
+
+        return Response({'message': 'Tranzakciók sikeresen létrehozva.', 'transactions': transactions}, status=status.HTTP_201_CREATED)
 
     except models.Product.DoesNotExist:
         return Response({'error': 'A megadott termék nem létezik.'}, status=status.HTTP_404_NOT_FOUND)
+
 
 class AdvertisementUpdateView(generics.UpdateAPIView):
     queryset = models.Product.objects.all()

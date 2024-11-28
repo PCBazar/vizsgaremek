@@ -1,45 +1,16 @@
-import React, { useEffect, useState } from 'react';
-import "./cart.css";
-import { useNavigate } from 'react-router-dom';
+import React, { useState } from 'react';
+import { useCart } from './CartContext';
+import "./cart.css"; 
+import { useNavigate } from 'react-router-dom'
+import CustomModal from '../Modal/Modal';
 
-const Cart = ({ cart, setCart }) => {
-  const username = localStorage.getItem('username') || "";
+
+const Cart = () => {
+  const { cart, removeItemFromCart, updateQuantity, clearCart } = useCart();
   const [paymentMethod, setPaymentMethod] = useState('');
   const navigate = useNavigate();
-
-  useEffect(() => {
-    const savedCart = localStorage.getItem(`cart_${username}`);
-    if (savedCart) {
-      setCart(JSON.parse(savedCart));
-    }
-  }, [setCart]);
-
-  useEffect(() => {
-    updateLocalStorage(cart);
-  }, [cart]);
-
-  const updateLocalStorage = (updatedCart) => {
-    localStorage.setItem(`cart_${username}`, JSON.stringify(updatedCart));
-  };
-
-  const removeItemFromCart = (productId) => {
-    const updatedCart = cart.filter(item => item.id !== productId);
-    setCart(updatedCart);
-    updateLocalStorage(updatedCart);
-  };
-
-  const updateQuantity = (productId, newQuantity) => {
-    const updatedCart = cart.map(item => {
-      if (item.id === productId) {
-        const stockQuantity = item.stock_quantity;
-        const validQuantity = Math.min(newQuantity, stockQuantity);
-        return { ...item, quantity: validQuantity };
-      }
-      return item;
-    });
-    setCart(updatedCart);
-    updateLocalStorage(updatedCart);
-  };
+  const [message, setMessage] = useState("");
+  const [modalOpen, setModalOpen] = useState(false);
 
   const handlePaymentMethodChange = (e) => {
     setPaymentMethod(e.target.value);
@@ -48,44 +19,45 @@ const Cart = ({ cart, setCart }) => {
   const handleCheckout = async () => {
     if (cart.length === 0) return alert('A kosár üres!');
 
-    const item = cart[0];
-
-    const transactionData = {
+    const transactionData = cart.map((item) => ({
       product_id: item.id,
       quantity: item.quantity || 1,
       payment_method: paymentMethod,
-    };
+    }));
 
-    const response = await fetch('http://127.0.0.1:8000/api/cart/', {
-      method: 'POST',
-      credentials: 'include',
-      headers: {
-        'X-CSRFToken': document.cookie.match(/csrftoken=([^;]+)/)[1],
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(transactionData),
-    });
-
-    const data = await response.json();
-
-    if (response.ok) {
-      console.log('Sikeres tranzakció:', data);
-      setCart([]);
-      updateLocalStorage([]);
-      alert('Tranzakció sikeresen létrejött!');
-      navigate('/');
-    } else {
-      alert(`Hiba történt: ${data.error || 'Ismeretlen hiba'}`);
-      console.error('Hiba történt:', data);
+    try {
+      const response = await fetch('http://127.0.0.1:8000/api/cart/', {
+        method: 'POST',
+        credentials: 'include',
+        headers: {
+          'X-CSRFToken': document.cookie.match(/csrftoken=([^;]+)/)[1],
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ items: transactionData }), // A `transactionData` helyett használjuk a JSON-t
+      });
+      const data = await response.json();
+      if (!response.ok) {
+        setMessage(`Hiba történt: ${data.error || 'Ismeretlen hiba'}`);
+        setModalOpen(true)
+        console.error('Hiba történt:', data);
+      } else {
+        clearCart();
+        setMessage('Tranzakció sikeresen létrejött!');
+        setModalOpen(true)
+        /*navigate('/');*/
+      }
+    } catch (error) {
+      console.error('Hiba történt a kijelentkezés közben:', error);
+      alert(`Hiba történt: ${error.message}`);
     }
   };
 
   const calculateTotalPrice = () => {
-    const total = cart.reduce((total, item) => {
-      const itemTotal = (item.price * (item.quantity || 1));
-      return total + itemTotal;
-    }, 0);
-    return total;
+    return cart.reduce((total, item) => total + item.price * (item.quantity || 1), 0);
+  };
+  const handleCloseModal = () => {
+    setModalOpen(false);
+    window.location.href = "/";
   };
 
   return (
@@ -109,7 +81,7 @@ const Cart = ({ cart, setCart }) => {
                     onChange={(e) => updateQuantity(item.id, parseInt(e.target.value))}
                   />
                   <div className="torles">
-                  <button onClick={() => removeItemFromCart(item.id)}>Törlés</button>
+                    <button onClick={() => removeItemFromCart(item.id)}>Törlés</button>
                   </div>
                 </li>
               ))}
@@ -123,15 +95,21 @@ const Cart = ({ cart, setCart }) => {
               <option value="paypal">PayPal</option>
             </select>
             <div className="fizetes">
-            <button onClick={handleCheckout} disabled={cart.length === 0 || !paymentMethod}>
-              Fizetés
-            </button>
+              <button onClick={handleCheckout} disabled={cart.length === 0 || !paymentMethod}>
+                Fizetés
+              </button>
             </div>
           </div>
         )}
       </div>
+      {modalOpen && (
+          <CustomModal
+            isOpen={modalOpen}
+            onClose={handleCloseModal}
+            message={message}
+          />
+        )}
     </div>
   );
 };
-
 export default Cart;

@@ -33,6 +33,7 @@ const OrderList = () => {
                       <li key={order.id}>
                           <p>Termék: {order.product.title}</p>
                           <p>Ár: {order.price} Ft</p>
+                          <p>{new Date(order.transaction_date).toLocaleString()}</p>
                           <div className="order-button">
                           <button onClick={() => handleDetailsClick(order)}>Részletek</button>
                           </div>
