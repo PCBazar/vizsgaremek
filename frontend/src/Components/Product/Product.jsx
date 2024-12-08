@@ -8,6 +8,7 @@ const Product = () => {
   const [item, setItem] = useState(null);
   const [loading, setLoading] = useState(true);
   const { cart, addToCart } = useCart();
+  const isLoggedIn = localStorage.getItem("authTokens") !== null;
 
   useEffect(() => {
     const fetchData = async () => {
@@ -28,7 +29,7 @@ const Product = () => {
   if (loading) return <div>Loading...</div>;
   if (!item) return <div>Item not found</div>;
 
-  // Ellenőrzés, hogy a kosárban lévő mennyiség meghaladja-e a készletet
+  
   const cartItem = cart.find(cartItem => cartItem.id === item.id);
   const isOutOfStock = cartItem && cartItem.quantity >= item.stock_quantity;
 
@@ -40,13 +41,14 @@ const Product = () => {
         <p className="product-seller">Eladó: {item.seller.username}</p>
         <p className="stock-info">Készleten: {item.stock_quantity}</p>
         <p className="product-price">{item.price} Ft</p>
+        {isLoggedIn ? 
         <button 
           onClick={() => addToCart(item)} 
           className="add-to-cart-button" 
           disabled={isOutOfStock}
         >
           {isOutOfStock ? "Elfogyott" : "Kosárba"}
-        </button>
+        </button> : ""}
       </div>
       <img src={item.image} alt={item.title} className="product-image" />
       <p className="description">{item.description}</p>

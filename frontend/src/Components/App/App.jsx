@@ -58,7 +58,7 @@ function App() {
           />
           <Route
             path="/product/:id"
-            element={<Product /*addToCart={addToCart}*/ />}
+            element={<Product  />}
           />
           <Route
             path="/add"
@@ -72,7 +72,7 @@ function App() {
             path="/cart"
             element={
               <PrivateRoute isLoggedIn={isLoggedIn}>
-                <Cart /*cart={cart} setCart={setCart}*/ />
+                <Cart  />
               </PrivateRoute>
             }
           />

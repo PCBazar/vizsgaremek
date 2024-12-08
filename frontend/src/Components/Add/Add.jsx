@@ -54,9 +54,9 @@ function Add() {
     const data = await response.json();
     if (response.ok) {
       setMessage(data.message);
-      setModalOpen(true); // A modal sikeres feladás után nyílik meg
+      setModalOpen(true); 
     }else {
-      setMessage('Hiba történt hirdetésfeladáskor!'); // Hibaüzenet beállítása
+      setMessage('Hiba történt hirdetésfeladáskor!'); 
       setModalOpen(true);
     }
   }
@@ -80,7 +80,6 @@ function Add() {
               placeholder="Cím"
               value={title}
               onChange={(e) => setTitle(e.target.value)}
-              autoComplete="off"
               required
             />
           </div>
@@ -92,7 +91,6 @@ function Add() {
               placeholder="Leírás"
               value={description}
               onChange={(e) => setDescription(e.target.value)}
-              autoComplete="off"
               rows="4"
               required
             />
@@ -106,7 +104,6 @@ function Add() {
               placeholder="Ár"
               value={price}
               onChange={(e) => setPrice(e.target.value)}
-              autoComplete="off"
               required
             />
           </div>
@@ -119,7 +116,6 @@ function Add() {
               placeholder="Mennyiség"
               value={stockQuantity}
               onChange={(e) => setStockQuantity(e.target.value)}
-              autoComplete="off"
               required
             />
           </div>
@@ -152,11 +148,8 @@ function Add() {
             <button type="submit">Hirdetés feladása</button>
           </div>
         </form>
-
-        {/* Üzenet megjelenítése a form alatt */}
         {message && <p>{message}</p>}
-
-        {/* A modal akkor jelenik meg, ha a modalOpen igaz */}
+        
         {modalOpen && (
           <CustomModal
             isOpen={modalOpen}

@@ -57,9 +57,9 @@
     }
 
     .filter-item {
-        flex: 1 1 calc(25% - 20px); /* Szélesség beállítása 25%-ra, közök figyelembe vétele */
-        max-width: 100px; /* Maximum szélesség */
-        height: 50px; /* Magasság beállítása */
+        flex: 1 1 calc(25% - 20px); 
+        max-width: 100px;
+        height: 50px; 
         font-size: small;
         text-align: center;
         padding: 10px;
@@ -67,9 +67,9 @@
         color: white;
         cursor: pointer;
         box-sizing: border-box;
-        display: flex; /* Flexbox beállítása a tartalom középre igazításához */
-        align-items: center; /* Vertikális középre igazítás */
-        justify-content: center; /* Horizontális középre igazítás */
+        display: flex; 
+        align-items: center; 
+        justify-content: center; 
     }
 
     .filter-item:hover {

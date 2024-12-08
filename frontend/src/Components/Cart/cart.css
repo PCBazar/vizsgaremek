@@ -80,8 +80,8 @@
     margin-top: 10px;
 }
 .fizetes{
-    margin-top: 20px; /* Térköz a gomb előtt */
-    text-align: center; /* Igazítás középre */
+    margin-top: 20px; 
+    text-align: center; 
     display: flex;
     justify-content: center;
 }
@@ -92,8 +92,8 @@
     width: auto;
 }
 .torles{
-    margin-top: 20px; /* Térköz a gomb előtt */
-    text-align: center; /* Igazítás középre */
+    margin-top: 20px; 
+    text-align: center; 
     display: flex;
     justify-content: center;
 }

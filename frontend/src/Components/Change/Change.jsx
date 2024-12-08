@@ -59,7 +59,7 @@ const Change = () => {
     };
     const handleCloseModal = () => {
         setModalOpen(false);
-        window.location.href = "/MyAds"; // Visszairányítás a főoldalra
+        window.location.href = "/MyAds"; 
       };
 
     return (

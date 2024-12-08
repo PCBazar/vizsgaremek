@@ -1,14 +1,12 @@
 import React, { useState } from 'react';
 import { useCart } from './CartContext';
 import "./cart.css"; 
-import { useNavigate } from 'react-router-dom'
 import CustomModal from '../Modal/Modal';
 
 
 const Cart = () => {
   const { cart, removeItemFromCart, updateQuantity, clearCart } = useCart();
   const [paymentMethod, setPaymentMethod] = useState('');
-  const navigate = useNavigate();
   const [message, setMessage] = useState("");
   const [modalOpen, setModalOpen] = useState(false);
 
@@ -44,7 +42,6 @@ const Cart = () => {
         clearCart();
         setMessage('Tranzakció sikeresen létrejött!');
         setModalOpen(true)
-        /*navigate('/');*/
       }
     } catch (error) {
       console.error('Hiba történt a kijelentkezés közben:', error);

@@ -38,7 +38,7 @@ nav a:hover {
   width: 70px;
   display: none;
   border-radius: 50px;
-  /* Alapértelmezetten rejtve */
+ 
 }
 
 .nav-links {
@@ -50,12 +50,12 @@ nav a:hover {
 
 .nav-links.open {
   display: block;
-  /* Mobilnézetben jelenjen meg */
+ 
 }
 @media (max-width: 1200px) {
   .hamburger {
     display: block;
-    /* Csak 1000px alatt jelenik meg */
+    
   }
 
   nav {
@@ -69,14 +69,14 @@ nav a:hover {
 
   .nav-links {
     display: none;
-    /* Alapértelmezetten rejtve mobilnézetben */
+    
     width: 100%;
     flex-direction: column;
   }
 
   .nav-links.open {
     display: flex;
-    /* Mobilnézetben jelenjen meg */
+   
   }
 
   nav a {

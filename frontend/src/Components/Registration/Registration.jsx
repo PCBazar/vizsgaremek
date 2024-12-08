@@ -28,7 +28,12 @@ const Registration = () => {
 
         const data = await response.json();
         setMessage(data.message);
-        window.location.href = "/login";
+        if (response) {
+            setMessage(data.message);
+            window.location.href = "/login";
+        }else{
+            setMessage(data.message);
+        }
     };
 
     return (
@@ -45,7 +50,7 @@ const Registration = () => {
                             value={username}
                             onChange={(e) => setUsername(e.target.value)}
                             required
-                            autocomplete="username"
+                            minLength="6"
                         />
                     </div>
                     <div>
@@ -57,7 +62,7 @@ const Registration = () => {
                             value={password}
                             onChange={(e) => setPassword(e.target.value)}
                             required
-                            autocomplete="current-password"
+                            minLength="6"
                         />
                     </div>
                     <div>
@@ -69,7 +74,6 @@ const Registration = () => {
                             value={email}
                             onChange={(e) => setEmail(e.target.value)}
                             required
-                            autocomplete="email"
                         />
                     </div>
                     <div>
@@ -80,7 +84,6 @@ const Registration = () => {
                             name="firstName"
                             value={firstName}
                             onChange={(e) => setFirstName(e.target.value)}
-                            autocomplete="given-name"
                         />
                     </div>
                     <div>
@@ -91,7 +94,6 @@ const Registration = () => {
                             name="lastName"
                             value={lastName}
                             onChange={(e) => setLastName(e.target.value)}
-                            autocomplete="family-name"
                         />
                     </div>
                     <div className="reg-button">

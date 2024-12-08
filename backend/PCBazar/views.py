@@ -57,13 +57,13 @@ def Registration(request):
         _first_name=data.get('first_name')
         _last_name=data.get('last_name')
         if User.objects.filter(username=_username).exists():
-            return Response({"message": "A felhasználónév már foglalt!"}, status=status.HTTP_400_BAD_REQUEST)
+            return Response({"message": "A felhasználónév már foglalt!", "status": "error"}, status=status.HTTP_400_BAD_REQUEST)
         if User.objects.filter(email=_email).exists():
-            return Response({"message": "Az email már foglalt!"}, status=status.HTTP_400_BAD_REQUEST)
+            return Response({"message": "Az email már foglalt!", "status": "error"}, status=status.HTTP_400_BAD_REQUEST)
         newUser=User(username=_username,email=_email,first_name=_first_name,last_name=_last_name)
         newUser.set_password(_password) 
         newUser.save()
-        return Response({"message": "Sikeres regisztráció"}, status=status.HTTP_201_CREATED)
+        return Response({"message": "Sikeres regisztráció", "status": "succes"}, status=status.HTTP_201_CREATED)
     else:
         return Response({"message": "Nem JSON formátum!"}, status=status.HTTP_400_BAD_REQUEST)
 
@@ -112,7 +112,6 @@ def Add(request):
 @api_view(['POST'])
 @permission_classes([IsAuthenticated]) 
 def Cart(request):
-    transactions = []
     try:
         for item in request.data.get('items', []):
             product_id = item.get('product_id')
@@ -138,15 +137,7 @@ def Cart(request):
             product.stock_quantity -= quantity
             product.save()
             
-            transactions.append({
-                'transaction_id': transaction.id,
-                'product_id': product.id,
-                'quantity': quantity,
-                'price': transaction.price,
-                'payment_method': payment_method
-            })
-
-        return Response({'message': 'Tranzakciók sikeresen létrehozva.', 'transactions': transactions}, status=status.HTTP_201_CREATED)
+        return Response({'message': 'Tranzakciók sikeresen létrehozva.'}, status=status.HTTP_201_CREATED)
 
     except models.Product.DoesNotExist:
         return Response({'error': 'A megadott termék nem létezik.'}, status=status.HTTP_404_NOT_FOUND)

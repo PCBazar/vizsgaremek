@@ -9,8 +9,8 @@ const LoginModal = ({ isOpen, onClose, message }) => {
     const navigate = useNavigate();
   
     const handleLoginClick = () => {
-      onClose(); // Modal bezárása
-      navigate("/login"); // Navigáció a bejelentkezéshez
+      onClose(); 
+      navigate("/login"); 
     };
   
     return (

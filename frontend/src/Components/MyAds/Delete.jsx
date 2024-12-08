@@ -38,7 +38,6 @@ const DeleteAdvert = ({ id, onDelete }) => {
         <button onClick={openConfirmModal} className="delete-button">
           Törlés
         </button>
-        {/* Megerősítéshez használt modal */}
         {confirmModalOpen && (
           <ConfirmModal
             isOpen={confirmModalOpen}
