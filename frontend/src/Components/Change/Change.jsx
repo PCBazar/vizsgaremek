@@ -54,7 +54,7 @@ const Change = () => {
         } catch (error) {
             console.error('Error updating product:', error);
             setModalOpen(true);
-            setMessage('Sikerestelen mentés!')
+            setMessage('Sikertelen mentés!')
         }
     };
     const handleCloseModal = () => {
